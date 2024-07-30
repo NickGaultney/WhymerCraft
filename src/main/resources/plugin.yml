@@ -1,0 +1,14 @@
+name: worldresetondeath
+main: com.whymertech.worldresetondeath.Plugin
+version: 0.1
+api-version: 1.20.6
+commands:
+  kys:
+    description: Kill Yourself
+    usage: /kys
+  join:
+    description: Join the hardcore world
+    usage: /join
+  lobby:
+    description: Teleport to the lobby
+    usage: /lobby
