@@ -1,0 +1,12 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!src/
+
+# Within src directory, track everything
+src/**
+
+# Ignore other directories at the root
+!/src/**
