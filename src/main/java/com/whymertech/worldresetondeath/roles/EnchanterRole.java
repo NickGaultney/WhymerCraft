@@ -35,12 +35,13 @@ public class EnchanterRole extends GenericRole {
     public void preparePlayer() {
         giveItems();
         super.setMaxHealth(health);
+        addWeakness();
     }
 
     @Override
     public void resetPlayer() {
         super.resetPlayer();
-        removeSlowness();
+        removeWeakness();
     }
 
     @Override
@@ -48,7 +49,7 @@ public class EnchanterRole extends GenericRole {
         return "Enchanter";
     }
 
-    public void reduceStrength() {
+    public void addWeakness() {
         int duration = Integer.MAX_VALUE; // Practically infinite duration
 
         // Apply Speed I effect
@@ -56,7 +57,7 @@ public class EnchanterRole extends GenericRole {
         super.player.addPotionEffect(weakness);
     }
 
-    public void removeSlowness() {
+    public void removeWeakness() {
         player.removePotionEffect(PotionEffectType.WEAKNESS);
     }
 

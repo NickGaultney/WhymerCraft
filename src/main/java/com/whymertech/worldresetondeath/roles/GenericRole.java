@@ -12,9 +12,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.whymertech.worldresetondeath.GameManager;
+
 public class GenericRole implements Role {
 
     public Player player;
+    public GameManager gameManager;
+
+    public GenericRole(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
 
     public GenericRole(Player player) {
         this.player = player;

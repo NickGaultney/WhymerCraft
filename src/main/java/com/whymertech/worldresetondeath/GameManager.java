@@ -6,8 +6,10 @@ import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.Location;
 
@@ -36,11 +38,13 @@ public class GameManager {
 
     private File gameLogFile;
     private int gameNumber;
+    private SeedManager seedManager;
 
     private Plugin plugin;
 
     public GameManager(Plugin plugin) {
         this.plugin = plugin;
+        this.seedManager = new SeedManager(plugin);
         
         initGameLogFile();
         loadWorld();
@@ -94,9 +98,12 @@ public class GameManager {
         player.setGameMode(GameMode.SURVIVAL); // Set player game mode to survival
         player.getInventory().clear(); // Clear player inventory
         player.setLevel(30);
+        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
         player.setHealth(20); // Refill health
         player.setFoodLevel(20); // Refill hunger
         player.setSaturation(20); // Refill saturation
+        
+        removeAllPotionEffects(player);
 
         Role playerRole = getRole(player);
         playerRole.preparePlayer();
@@ -118,10 +125,12 @@ public class GameManager {
         player.setGameMode(GameMode.ADVENTURE); // Set player game mode to survival
         player.getInventory().clear();
         player.setLevel(0);
+        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
         player.setHealth(20);
         player.setFoodLevel(20);
         player.setSaturation(20);
-        
+
+        removeAllPotionEffects(player);
 
         player.teleport(getLobbySpawnLocation());
     }
@@ -260,11 +269,12 @@ public class GameManager {
         // Create a new world with the specified seed and set the difficulty to hardcore
         //plugin.getLogger().info("Creating new world with seed: " + GameManager.SEED);
         WorldCreator creator = new WorldCreator(GameManager.WORLD_NAME);
-        //creator.seed(GameManager.SEED);
+        Long seed = seedManager.getRandomSeedFromList();
+        creator.seed(seed);
         World newWorld = Bukkit.createWorld(creator);
         newWorld.setDifficulty(Difficulty.HARD);
 
-        plugin.getLogger().info("World has been reset with seed " + GameManager.SEED + " and set to hardcore mode!");
+        plugin.getLogger().info("World has been reset with seed " + seed + " and set to hardcore mode!");
 
         
         return newWorld;
@@ -277,6 +287,7 @@ public class GameManager {
         loadWorldNether.environment(World.Environment.NETHER);
         World newWorld = Bukkit.createWorld(loadWorldNether);
         newWorld.setDifficulty(Difficulty.HARD);
+        newWorld.setPVP(true);
 
         plugin.getLogger().info("Nether has been created");
     }
@@ -331,9 +342,6 @@ public class GameManager {
         } catch (IOException e) {
             plugin.getLogger().severe("Failed to add player role to game log file: " + e.getMessage());
         }
-
-        //String roleName =  gameLog.getString("games.game_" + gameNumber + ".players." + player.getName() + ".role", "");
-        //playerRoles.put(player.getUniqueId(), role);
     }
 
     public Role getRole(Player player) {
@@ -382,5 +390,17 @@ public class GameManager {
         }
 
         return role;
+    }
+
+    public void removeAllPotionEffects(Player player) {
+        if (player != null) {
+            for (PotionEffect effect : player.getActivePotionEffects()) {
+                player.removePotionEffect(effect.getType());
+            }
+        }
+    }
+
+    public SeedManager getSeedManager() {
+        return seedManager;
     }
 }

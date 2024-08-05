@@ -6,6 +6,7 @@ import com.whymertech.worldresetondeath.commands.JoinCommand;
 import com.whymertech.worldresetondeath.commands.KysCommand;
 import com.whymertech.worldresetondeath.commands.LobbyCommand;
 import com.whymertech.worldresetondeath.commands.RoleCommand;
+import com.whymertech.worldresetondeath.commands.AddSeedCommand;
 import com.whymertech.worldresetondeath.listeners.AnvilListener;
 import com.whymertech.worldresetondeath.listeners.DeathListener;
 import com.whymertech.worldresetondeath.listeners.PortalListener;
@@ -13,6 +14,8 @@ import com.whymertech.worldresetondeath.listeners.PlayerListener;
 import com.whymertech.worldresetondeath.listeners.DoubleJumpListener;
 import com.whymertech.worldresetondeath.listeners.EnchantmentListener;
 import com.whymertech.worldresetondeath.tabCompleters.RoleTabCompleter;
+
+import com.whymertech.worldresetondeath.roles.UndeadRole;
 
 import org.bukkit.event.Listener;
 
@@ -35,12 +38,14 @@ public class Plugin extends JavaPlugin implements Listener
     private File deathLogFile;
 
     private GameManager gameManager;
+    private SeedManager seedManager;
 
     @Override
     public void onEnable() {
         initDeathLogFile();
         
         gameManager = new GameManager(this);
+        seedManager = gameManager.getSeedManager();
 
         getServer().getPluginManager().registerEvents(this, this); // Registering the main class as the listener
         getServer().getPluginManager().registerEvents(new PortalListener(this), this);
@@ -49,12 +54,15 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new DoubleJumpListener(this, gameManager), this);
         getServer().getPluginManager().registerEvents(new AnvilListener(gameManager), this);
         getServer().getPluginManager().registerEvents(new EnchantmentListener(gameManager), this);
+
+        getServer().getPluginManager().registerEvents(new UndeadRole(gameManager), this);        
         
         getCommand("kys").setExecutor(new KysCommand(this, gameManager)); // Registering the kys command
         getCommand("join").setExecutor(new JoinCommand(this, gameManager)); // Registering the join command
         getCommand("lobby").setExecutor(new LobbyCommand(this, gameManager)); // Registering the lobby command
         getCommand("role").setExecutor(new RoleCommand(gameManager));   // Registering the role command
         getCommand("role").setTabCompleter(new RoleTabCompleter());
+        getCommand("addseed").setExecutor(new AddSeedCommand(seedManager));   // Registering the addseed command
 
         getLogger().info("WorldResetOnDeath plugin has been enabled!");
     }

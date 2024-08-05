@@ -15,3 +15,6 @@ commands:
   role:
     description: Choose your role
     usage: /role
+  addseed:
+    description: Add seeds to the selection pool
+    usage: /addseed <seed> <name>
