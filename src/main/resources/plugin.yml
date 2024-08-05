@@ -12,3 +12,6 @@ commands:
   lobby:
     description: Teleport to the lobby
     usage: /lobby
+  role:
+    description: Choose your role
+    usage: /role
