@@ -39,6 +39,8 @@ public class Plugin extends JavaPlugin implements Listener
 
     private GameManager gameManager;
     private SeedManager seedManager;
+    Utils utils = new Utils(this);
+
 
     @Override
     public void onEnable() {

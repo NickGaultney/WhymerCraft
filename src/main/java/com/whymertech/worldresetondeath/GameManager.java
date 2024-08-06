@@ -102,6 +102,8 @@ public class GameManager {
         player.setHealth(20); // Refill health
         player.setFoodLevel(20); // Refill hunger
         player.setSaturation(20); // Refill saturation
+
+        player.setInvulnerable(false);
         
         removeAllPotionEffects(player);
 
@@ -130,6 +132,7 @@ public class GameManager {
         player.setFoodLevel(20);
         player.setSaturation(20);
 
+        player.setInvulnerable(true);
         removeAllPotionEffects(player);
 
         player.teleport(getLobbySpawnLocation());

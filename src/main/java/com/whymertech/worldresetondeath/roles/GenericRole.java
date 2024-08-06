@@ -72,7 +72,7 @@ public class GenericRole implements Role {
         ItemMeta pickaxeMeta = diamondPickaxe.getItemMeta();
         pickaxeMeta.addEnchant(Enchantment.MENDING, 1, true);
         pickaxeMeta.addEnchant(Enchantment.EFFICIENCY, 5, true);
-        pickaxeMeta.addEnchant(Enchantment.UNBREAKING, 3, true);
+        pickaxeMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
         diamondPickaxe.setItemMeta(pickaxeMeta);
 
         player.getInventory().addItem(diamondPickaxe);
