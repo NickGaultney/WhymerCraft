@@ -1,5 +1,7 @@
 package com.whymertech.worldresetondeath.listeners;
 
+import com.whymertech.worldresetondeath.roles.BlackSmithRole;
+import com.whymertech.worldresetondeath.roles.EnchanterRole;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
@@ -24,7 +26,7 @@ public class AnvilListener implements Listener {
         if (player != null) {
             Role playerRole = gameManager.getRole(player);
 
-            if (playerRole != null) {
+            if (playerRole != null && playerRole instanceof BlackSmithRole) {
                 AnvilInventory anvilInventory = event.getInventory();
 
                 // Set the repair cost to 0
