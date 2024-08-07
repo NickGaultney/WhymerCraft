@@ -12,6 +12,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.Location;
+import java.util.Iterator;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
+
 
 import com.whymertech.worldresetondeath.roles.AdventurerRole;
 import com.whymertech.worldresetondeath.roles.ArcherRole;
@@ -134,6 +138,13 @@ public class GameManager {
 
         player.setInvulnerable(true);
         removeAllPotionEffects(player);
+
+        Iterator<Advancement> advancements = Bukkit.getServer().advancementIterator();
+        while (advancements.hasNext()) {
+            AdvancementProgress progress = player.getAdvancementProgress(advancements.next());
+            for (String s : progress.getAwardedCriteria())
+                progress.revokeCriteria(s);
+        }
 
         player.teleport(getLobbySpawnLocation());
     }

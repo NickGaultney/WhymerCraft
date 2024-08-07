@@ -4,7 +4,7 @@
 # But not these files...
 !.gitignore
 !src/
-
+!pom.xml
 # Within src directory, track everything
 src/**
 
