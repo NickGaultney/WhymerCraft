@@ -12,6 +12,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.Location;
+import java.util.Iterator;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
+
 
 import com.whymertech.worldresetondeath.roles.AdventurerRole;
 import com.whymertech.worldresetondeath.roles.ArcherRole;

@@ -4,16 +4,9 @@
 # But not these files...
 !.gitignore
 !src/
-
+!pom.xml
 # Within src directory, track everything
 src/**
 
 # Ignore other directories at the root
 !/src/**
-target/classes/com/whymertech/worldresetondeath/DeathListener.class
-target/classes/com/whymertech/worldresetondeath/JoinCommand.class
-target/classes/com/whymertech/worldresetondeath/KysCommand.class
-target/classes/com/whymertech/worldresetondeath/LobbyCommand.class
-target/classes/com/whymertech/worldresetondeath/Plugin.class
-target/classes/com/whymertech/worldresetondeath/Plugin$1.class
-target/classes/com/whymertech/worldresetondeath/PortalListener.class
