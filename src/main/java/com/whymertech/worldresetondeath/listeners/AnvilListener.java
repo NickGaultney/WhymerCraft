@@ -1,7 +1,6 @@
 package com.whymertech.worldresetondeath.listeners;
 
 import com.whymertech.worldresetondeath.roles.BlackSmithRole;
-import com.whymertech.worldresetondeath.roles.EnchanterRole;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
