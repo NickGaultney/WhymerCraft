@@ -135,6 +135,13 @@ public class GameManager {
         player.setInvulnerable(true);
         removeAllPotionEffects(player);
 
+        Iterator<Advancement> advancements = Bukkit.getServer().advancementIterator();
+        while (advancements.hasNext()) {
+            AdvancementProgress progress = player.getAdvancementProgress(advancements.next());
+            for (String s : progress.getAwardedCriteria())
+                progress.revokeCriteria(s);
+        }
+
         player.teleport(getLobbySpawnLocation());
     }
 
