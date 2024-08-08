@@ -1,16 +1,15 @@
 package com.whymertech.worldresetondeath.roles;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -67,13 +66,14 @@ public class ArcherRole extends GenericRole{
             bowMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
             bowMeta.addEnchant(Enchantment.MENDING, 1, true);
 
+            // Use PersistentDataContainer to store custom attributes
+            NamespacedKey key = new NamespacedKey("worldresetondeath", "custom_attack_damage");
             // Add custom attributes
             AttributeModifier damageModifier = new AttributeModifier(
-                    UUID.randomUUID(), 
-                    "generic.attackDamage", 
+                    key, 
                     6.0, // Additional attack damage
                     AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlot.HAND
+                    EquipmentSlotGroup.HAND
             );
             bowMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
             

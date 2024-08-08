@@ -1,19 +1,18 @@
 package com.whymertech.worldresetondeath.roles;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.attribute.Attribute;
 
 
 import com.whymertech.worldresetondeath.GameManager;
-
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -70,15 +69,19 @@ public class FarmerRole extends GenericRole {
             hoeMeta.addEnchant(Enchantment.EFFICIENCY, 5, true);
             hoeMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
 
+            // Use PersistentDataContainer to store custom attributes
+            NamespacedKey key = new NamespacedKey("worldresetondeath", "custom_attack_damage");
             // Add custom attributes
             AttributeModifier damageModifier = new AttributeModifier(
-                UUID.randomUUID(), 
-                "generic.attackDamage", 
-                6.0, // Additional attack damage
-                AttributeModifier.Operation.ADD_NUMBER,
-                EquipmentSlot.HAND
+                    key, 
+                    6.0, // Additional attack damage
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlotGroup.HAND
             );
             hoeMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
+
+            // Optionally, hide attributes from the item lore
+            //hoeMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
             diamondHoe.setItemMeta(hoeMeta);
         }
@@ -87,7 +90,7 @@ public class FarmerRole extends GenericRole {
         shovelMeta.addEnchant(Enchantment.MENDING, 1, true);
         shovelMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
         shovelMeta.addEnchant(Enchantment.SILK_TOUCH, 1, true);
-        shovelMeta.addEnchant(Enchantment.EFFICIENCY, 3, true);
+        shovelMeta.addEnchant(Enchantment.EFFICIENCY, 5, true);
         diamondShovel.setItemMeta(shovelMeta);
 
         giveBaseAxe();

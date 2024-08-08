@@ -1,16 +1,15 @@
 package com.whymertech.worldresetondeath.roles;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -64,22 +63,22 @@ public class RogueRole extends GenericRole {
             rogueSwordMeta.addEnchant(Enchantment.MENDING, 1, true);
             rogueSwordMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
 
+            // Use PersistentDataContainer to store custom attributes
+            NamespacedKey key = new NamespacedKey("worldresetondeath", "custom_attack_damage");
             // Add custom attributes
             AttributeModifier damageModifier = new AttributeModifier(
-                    UUID.randomUUID(), 
-                    "generic.attackDamage", 
+                    key, 
                     40.0, // Additional attack damage
                     AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlot.HAND
+                    EquipmentSlotGroup.HAND
             );
             rogueSwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
 
             AttributeModifier attackSpeedAttributeModifier = new AttributeModifier(
-                    UUID.randomUUID(),
-                    "generic.attackSpeed",
-                    -3.8,
+                    key,
+                    -3.6,
                     AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlot.HAND
+                    EquipmentSlotGroup.HAND
             );
             rogueSwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, attackSpeedAttributeModifier);
 

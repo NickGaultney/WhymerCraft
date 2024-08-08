@@ -1,12 +1,13 @@
 package com.whymertech.worldresetondeath.roles;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -14,7 +15,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.attribute.Attribute;
 
 import com.whymertech.worldresetondeath.GameManager;
-import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import java.util.Random;
@@ -114,13 +114,14 @@ public class MinerRole extends GenericRole {
             pickaxeMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
             pickaxeMeta.addEnchant(Enchantment.FORTUNE, 3, true);
 
+            // Use PersistentDataContainer to store custom attributes
+            NamespacedKey key = new NamespacedKey("worldresetondeath", "custom_attack_damage");
             // Add custom attributes
             AttributeModifier damageModifier = new AttributeModifier(
-                    UUID.randomUUID(), 
-                    "generic.attackDamage", 
+                    key, 
                     6.0, // Additional attack damage
                     AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlot.HAND
+                    EquipmentSlotGroup.HAND
             );
             pickaxeMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
 
