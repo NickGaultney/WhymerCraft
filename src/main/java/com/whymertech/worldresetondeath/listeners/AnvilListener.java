@@ -27,8 +27,10 @@ public class AnvilListener implements Listener {
 
             if (playerRole != null && playerRole instanceof BlackSmithRole) {
                 AnvilInventory anvilInventory = event.getInventory();
+                
 
                 // Set the repair cost to 0
+                // TODO: This is depreciated. Fix it.
                 anvilInventory.setRepairCost(0);
             }
         }
