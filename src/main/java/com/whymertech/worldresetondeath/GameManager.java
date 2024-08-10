@@ -4,6 +4,8 @@ import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Statistic;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.attribute.Attribute;
@@ -11,7 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.Location;
+
 import java.util.Iterator;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
@@ -145,6 +147,8 @@ public class GameManager {
             for (String s : progress.getAwardedCriteria())
                 progress.revokeCriteria(s);
         }
+
+        player.setStatistic(Statistic.TIME_SINCE_REST, 0);
 
         player.teleport(getLobbySpawnLocation());
         player.getInventory().addItem(LobbyManager.createLobbyItem());
