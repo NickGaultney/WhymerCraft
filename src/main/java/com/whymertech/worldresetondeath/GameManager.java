@@ -147,6 +147,7 @@ public class GameManager {
         }
 
         player.teleport(getLobbySpawnLocation());
+        player.getInventory().addItem(LobbyManager.createLobbyItem());
     }
 
     public void resetGame() {
@@ -355,6 +356,20 @@ public class GameManager {
             gameLog.save(gameLogFile);
         } catch (IOException e) {
             plugin.getLogger().severe("Failed to add player role to game log file: " + e.getMessage());
+        }
+    }
+
+    public void removeRole(Player player) {
+        YamlConfiguration gameLog = YamlConfiguration.loadConfiguration(gameLogFile);
+
+        // Update the player role in the YAML file
+        gameLog.set("games.game_" + gameNumber + ".players." + player.getName(), "");
+
+        // Save the updated game log
+        try {
+            gameLog.save(gameLogFile);
+        } catch (IOException e) {
+            plugin.getLogger().severe("Failed to remove player role from game log file: " + e.getMessage());
         }
     }
 

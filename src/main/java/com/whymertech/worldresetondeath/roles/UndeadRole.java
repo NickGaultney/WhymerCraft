@@ -55,7 +55,6 @@ public class UndeadRole extends GenericRole implements Listener {
     public void giveItems() {
         ItemStack rottenFlesh = new ItemStack(Material.ROTTEN_FLESH, 10);
 
-        giveBaseSword();
         giveBasePickaxe();
         giveBaseAxe();
         giveBaseShovel();

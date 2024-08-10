@@ -18,3 +18,9 @@ commands:
   addseed:
     description: Add seeds to the selection pool
     usage: /addseed <seed> <name>
+  givelobbyitem:
+    description: Give player the lobby item
+    usage: /givelobbyitem
+  resetplayer:
+    description: Resets the player's role and returns to lobby
+    usage: /resetplayer <player name>
