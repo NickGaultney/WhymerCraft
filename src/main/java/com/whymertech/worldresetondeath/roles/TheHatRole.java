@@ -62,7 +62,6 @@ public class TheHatRole extends GenericRole {
 //            skyblock.place(island, false, StructureRotation.values()[randInt(0, 3)], Mirror.values()[randInt(0, 2)], 0, 1, new Random());
             skyblock.place(island, false, StructureRotation.NONE, Mirror.NONE, 0, 1, new Random());
             plugin.getLogger().info("Skyblock has been placed");
-            giveLimitedItems();
         } catch (IOException e) {
             giveItems();
             island = new Location(world,
@@ -96,10 +95,5 @@ public class TheHatRole extends GenericRole {
         super.enchantItem(Enchantment.UNBREAKING, 255, elytra);
 
         super.player.getInventory().addItem(elytra, rockets);
-    }
-
-    public void giveLimitedItems() {
-        ItemStack pickaxe = new ItemStack(Material.STONE_PICKAXE);
-        super.player.getInventory().addItem(pickaxe);
     }
 }
