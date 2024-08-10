@@ -64,10 +64,11 @@ public class RogueRole extends GenericRole {
             rogueSwordMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
 
             // Use PersistentDataContainer to store custom attributes
-            NamespacedKey key = new NamespacedKey("worldresetondeath", "custom_attack_damage");
+            NamespacedKey attackDamageKey = new NamespacedKey("worldresetondeath", "custom_attack_damage");
+            NamespacedKey attackSpeedKey = new NamespacedKey("worldresetondeath", "custom_attack_speed");
             // Add custom attributes
             AttributeModifier damageModifier = new AttributeModifier(
-                    key, 
+                    attackDamageKey, 
                     40.0, // Additional attack damage
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.HAND
@@ -75,7 +76,7 @@ public class RogueRole extends GenericRole {
             rogueSwordMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
 
             AttributeModifier attackSpeedAttributeModifier = new AttributeModifier(
-                    key,
+                    attackSpeedKey,
                     -3.6,
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.HAND

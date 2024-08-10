@@ -5,14 +5,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.whymertech.worldresetondeath.commands.JoinCommand;
 import com.whymertech.worldresetondeath.commands.KysCommand;
 import com.whymertech.worldresetondeath.commands.LobbyCommand;
+import com.whymertech.worldresetondeath.commands.ResetPlayerCommand;
 import com.whymertech.worldresetondeath.commands.RoleCommand;
 import com.whymertech.worldresetondeath.commands.AddSeedCommand;
+import com.whymertech.worldresetondeath.commands.GiveLobbyItemCommand;
 import com.whymertech.worldresetondeath.listeners.AnvilListener;
 import com.whymertech.worldresetondeath.listeners.DeathListener;
 import com.whymertech.worldresetondeath.listeners.PortalListener;
 import com.whymertech.worldresetondeath.listeners.PlayerListener;
 import com.whymertech.worldresetondeath.listeners.DoubleJumpListener;
 import com.whymertech.worldresetondeath.listeners.EnchantmentListener;
+import com.whymertech.worldresetondeath.listeners.LobbyItemListener;
+import com.whymertech.worldresetondeath.tabCompleters.ResetPlayerTabCompleter;
 import com.whymertech.worldresetondeath.tabCompleters.RoleTabCompleter;
 
 import com.whymertech.worldresetondeath.roles.UndeadRole;
@@ -56,6 +60,8 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new DoubleJumpListener(this, gameManager), this);
         getServer().getPluginManager().registerEvents(new AnvilListener(gameManager), this);
         getServer().getPluginManager().registerEvents(new EnchantmentListener(gameManager), this);
+        getServer().getPluginManager().registerEvents(new LobbyItemListener(), this);
+
 
         getServer().getPluginManager().registerEvents(new UndeadRole(gameManager), this);        
         
@@ -64,7 +70,11 @@ public class Plugin extends JavaPlugin implements Listener
         getCommand("lobby").setExecutor(new LobbyCommand(this, gameManager)); // Registering the lobby command
         getCommand("role").setExecutor(new RoleCommand(gameManager));   // Registering the role command
         getCommand("role").setTabCompleter(new RoleTabCompleter());
+
         getCommand("addseed").setExecutor(new AddSeedCommand(seedManager));   // Registering the addseed command
+        getCommand("givelobbyitem").setExecutor(new GiveLobbyItemCommand());   // Registering the addseed command
+        getCommand("resetplayer").setExecutor(new ResetPlayerCommand(this, gameManager));   // Registering the addseed command
+        getCommand("resetplayer").setTabCompleter(new ResetPlayerTabCompleter());
 
         getLogger().info("WorldResetOnDeath plugin has been enabled!");
     }
