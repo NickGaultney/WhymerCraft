@@ -8,4 +8,5 @@ public interface Role {
     void resetPlayer();
     boolean canDoubleJump();
     String name();
+    void addEffects();
 }

@@ -16,6 +16,7 @@ import com.whymertech.worldresetondeath.listeners.PlayerListener;
 import com.whymertech.worldresetondeath.listeners.DoubleJumpListener;
 import com.whymertech.worldresetondeath.listeners.EnchantmentListener;
 import com.whymertech.worldresetondeath.listeners.LobbyItemListener;
+import com.whymertech.worldresetondeath.listeners.MobDamageListener;
 import com.whymertech.worldresetondeath.tabCompleters.ResetPlayerTabCompleter;
 import com.whymertech.worldresetondeath.tabCompleters.RoleTabCompleter;
 
@@ -61,6 +62,7 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new AnvilListener(gameManager), this);
         getServer().getPluginManager().registerEvents(new EnchantmentListener(gameManager), this);
         getServer().getPluginManager().registerEvents(new LobbyItemListener(), this);
+        getServer().getPluginManager().registerEvents(new MobDamageListener(gameManager), this);
 
 
         getServer().getPluginManager().registerEvents(new UndeadRole(gameManager), this);        

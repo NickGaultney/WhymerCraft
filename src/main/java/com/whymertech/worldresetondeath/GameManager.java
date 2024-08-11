@@ -45,6 +45,7 @@ public class GameManager {
     private File gameLogFile;
     private int gameNumber;
     private SeedManager seedManager;
+    public double mobMultiplier = 1.0;
 
     private Plugin plugin;
 
@@ -125,6 +126,8 @@ public class GameManager {
     }
 
     public void resetPlayer(Player player) {
+        if (player == null) return;
+        
         Role playerRole = getRole(player);
         if (playerRole != null) {
             playerRole.resetPlayer();
@@ -174,6 +177,8 @@ public class GameManager {
 
         gameLog.set("current_game.number", gameNumber);
         gameLog.set("games.game_" + gameNumber + ".number", gameNumber);
+        gameLog.set("games.game_" + gameNumber + ".mobMultiplier", 1.0);
+        gameLog.set("games.game_" + gameNumber + ".deadPlayers", 0);
 
         // Save the updated game log
         try {
@@ -183,12 +188,41 @@ public class GameManager {
         }
     }
 
+    public void updatePlayerDeaths() {
+        mobMultiplier += 0.25;
+        YamlConfiguration gameLog = YamlConfiguration.loadConfiguration(gameLogFile);
+
+        gameLog.set("games.game_" + gameNumber + ".mobMultiplier", mobMultiplier);
+        gameLog.set("games.game_" + gameNumber + ".deadPlayers", 1);
+
+        // Save the updated game log
+        try {
+            gameLog.save(gameLogFile);
+        } catch (IOException e) {
+            plugin.getLogger().severe("Failed to save game log file in \"updatePlayerDeaths()\": " + e.getMessage());
+        }
+    }
+
+    public void resetPlayerDeathCount() {
+        YamlConfiguration gameLog = YamlConfiguration.loadConfiguration(gameLogFile);
+
+        gameLog.set("games.game_" + gameNumber + ".deadPlayers", 0);
+
+        // Save the updated game log
+        try {
+            gameLog.save(gameLogFile);
+        } catch (IOException e) {
+            plugin.getLogger().severe("Failed to save game log file in \"resetPlayerDeathCount()\": " + e.getMessage());
+        }
+    }
+
     private Location getLobbySpawnLocation() {
         return Bukkit.getWorld(LOBBY_WORLD_NAME).getSpawnLocation();
     }
 
     public void prepareWorldReset() {
         plugin.getLogger().info("Preparing to reset world...");
+        mobMultiplier = 1.0;
 
         World tempWorld = Bukkit.getWorld(LOBBY_WORLD_NAME);
         if (tempWorld == null) {
@@ -346,6 +380,7 @@ public class GameManager {
         } else {
             YamlConfiguration gameLog = YamlConfiguration.loadConfiguration(gameLogFile);
             gameNumber = gameLog.getInt("current_game.number", 0);
+            mobMultiplier = gameLog.getDouble("games.game_" + gameNumber + ".mobMultiplier", 1.0);
         }
     }
 

@@ -150,4 +150,8 @@ public class GenericRole implements Role {
 
         item.setItemMeta(itemMeta);
     }
+
+    public void addEffects() {
+        
+    }
 }
