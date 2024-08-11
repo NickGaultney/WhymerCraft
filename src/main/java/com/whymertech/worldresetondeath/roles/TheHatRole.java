@@ -25,10 +25,10 @@ import static com.whymertech.worldresetondeath.Utils.randInt;
 public class TheHatRole extends GenericRole {
 
     public double health = 20.0;
-    public Location island;
-    private double xOffset = 1.5;
-    private double yOffset = 4;
-    private double zOffset = 3.5;
+    public Location spawn;
+    private static final double xOffset = 1.5;
+    private static final double yOffset = 4;
+    private static final double zOffset = 3.5;
 
     public TheHatRole(Player player) {
         super(player);
@@ -39,10 +39,7 @@ public class TheHatRole extends GenericRole {
         World world = Bukkit.getWorld(GameManager.WORLD_NAME);
 
         if (world != null) {
-            return new Location(world,
-                    island.getBlockX() + xOffset,
-                    island.getBlockY() + yOffset,
-                    island.getBlockZ() + zOffset);
+            return spawn;
         }
         
         return null;
@@ -55,19 +52,35 @@ public class TheHatRole extends GenericRole {
         Plugin plugin = (Plugin) Bukkit.getPluginManager().getPlugin("worldresetondeath");
 
         try {
-            island = new Location(world, randInt(-100, 100), 250, randInt(-100, 100));
+            Location island = new Location(world, randInt(-1000, 1000), randInt(250, 300), randInt(-1000, 1000));
             plugin.getLogger().info("Skyblock Location Set");
             Structure skyblock = Bukkit.getStructureManager().loadStructure(skyblockFile);
             //Random orientation is cool, but save until i can calculate correct spawn location
 //            skyblock.place(island, false, StructureRotation.values()[randInt(0, 3)], Mirror.values()[randInt(0, 2)], 0, 1, new Random());
-            skyblock.place(island, false, StructureRotation.NONE, Mirror.NONE, 0, 1, new Random());
+            double x = xOffset;
+            double z = zOffset;
+            StructureRotation r = StructureRotation.values()[randInt(0,3)];
+            switch (r) {
+                case NONE -> {
+                    x = xOffset;
+                    z = zOffset;
+                } case COUNTERCLOCKWISE_90 -> {
+                    x = zOffset;
+                    z = -xOffset;
+                } case CLOCKWISE_90 -> {
+                    x = -zOffset;
+                    z = xOffset;
+                } case CLOCKWISE_180 -> {
+                    x = -xOffset;
+                    z = -zOffset;
+                }
+            }
+            skyblock.place(island, false, r, Mirror.NONE, 0, 1, new Random());
+            spawn = new Location(world, island.getBlockX() + x, island.getBlockY() + yOffset, island.getBlockZ() + z);
             plugin.getLogger().info("Skyblock has been placed");
         } catch (IOException e) {
             giveItems();
-            island = new Location(world,
-                    world.getSpawnLocation().getBlockX() - xOffset,
-                    world.getSpawnLocation().getBlockY() - yOffset,
-                    world.getSpawnLocation().getBlockZ() - zOffset);
+            spawn = world.getSpawnLocation();
             plugin.getLogger().severe("Failed to generate skyblock: " + e.getMessage());
         }
     }
