@@ -36,9 +36,7 @@ public class DrownedRole extends GenericRole {
     @Override
     public void preparePlayer() {
         giveItems();
-        addBreathingEffect();
-        addDolphinsGraceEffect();
-        addNightVision();
+        addEffects();
     }
 
     @Override
@@ -108,5 +106,11 @@ public class DrownedRole extends GenericRole {
         super.player.removePotionEffect(PotionEffectType.WATER_BREATHING);
         super.player.removePotionEffect(PotionEffectType.DOLPHINS_GRACE);
         super.player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+    }
+
+    public void addEffects() {
+        addBreathingEffect();
+        addDolphinsGraceEffect();
+        addNightVision();
     }
 }

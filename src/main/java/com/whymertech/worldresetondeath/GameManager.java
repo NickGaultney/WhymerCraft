@@ -125,6 +125,8 @@ public class GameManager {
     }
 
     public void resetPlayer(Player player) {
+        if (player == null) return;
+        
         Role playerRole = getRole(player);
         if (playerRole != null) {
             playerRole.resetPlayer();

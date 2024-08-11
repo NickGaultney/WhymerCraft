@@ -44,7 +44,7 @@ public class MinerRole extends GenericRole {
     public void preparePlayer() {
         giveItems();
         super.setMaxHealth(health);
-        addNightVision();
+        addEffects();
     }
 
     @Override
@@ -142,7 +142,16 @@ public class MinerRole extends GenericRole {
         super.player.addPotionEffect(nightVision);
     }
 
+    // TODO use the generic addEffects and removeEffects for all roles 
     public void removeMinerEffects() {
+        super.player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+    }
+
+    public void addEffects() {
+        addNightVision();
+    }
+
+    public void removeEffects() {
         super.player.removePotionEffect(PotionEffectType.NIGHT_VISION);
     }
 }

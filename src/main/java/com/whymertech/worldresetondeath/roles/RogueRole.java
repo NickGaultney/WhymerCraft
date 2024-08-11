@@ -38,7 +38,7 @@ public class RogueRole extends GenericRole {
     public void preparePlayer() {
         giveItems();
         super.setMaxHealth(health);
-        super.addSpeedEffect(speedLevel);
+        addEffects();
     }
 
     @Override
@@ -100,5 +100,9 @@ public class RogueRole extends GenericRole {
     @Override
     public boolean canDoubleJump() {
         return true;
+    }
+
+    public void addEffects() {
+        super.addSpeedEffect(speedLevel);
     }
 }

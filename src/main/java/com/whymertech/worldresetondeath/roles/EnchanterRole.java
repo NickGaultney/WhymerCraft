@@ -35,7 +35,7 @@ public class EnchanterRole extends GenericRole {
     public void preparePlayer() {
         giveItems();
         super.setMaxHealth(health);
-        addWeakness();
+        addEffects();
     }
 
     @Override
@@ -70,5 +70,9 @@ public class EnchanterRole extends GenericRole {
         giveBaseShovel();
 
         super.player.getInventory().addItem(bookShelves);
+    }
+
+    public void addEffects() {
+        addWeakness();
     }
 }

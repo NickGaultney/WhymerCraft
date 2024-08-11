@@ -35,7 +35,7 @@ public class BlackSmithRole extends GenericRole {
     public void preparePlayer() {
         giveItems();
         super.setMaxHealth(health);
-        reduceBaseSpeed();
+        addEffects();
     }
 
     @Override
@@ -74,5 +74,9 @@ public class BlackSmithRole extends GenericRole {
         giveBaseShovel();
 
         super.player.getInventory().addItem(helmet, chestPlate, leggings, boots, anvil);
+    }
+
+    public void addEffects() {
+        reduceBaseSpeed();
     }
 }
