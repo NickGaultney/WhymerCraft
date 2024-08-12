@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RoleTabCompleter implements TabCompleter {
 
-    private final List<String> roles = List.of("Drowned", "TheHat", "Adventurer", "Farmer", "Miner", "Rogue", "Archer", "Fisherman", "Blacksmith", "Enchanter"); // Replace with your roles
+    private final List<String> roles = List.of("Drowned", "TheHat", "Adventurer", "Farmer", "Miner", "Rogue", "Archer", "Fisherman", "Blacksmith", "Enchanter", "Undead"); // Replace with your roles
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {

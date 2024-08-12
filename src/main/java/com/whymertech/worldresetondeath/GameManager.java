@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
+import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.Statistic;
 import org.bukkit.World;
@@ -29,6 +30,7 @@ import com.whymertech.worldresetondeath.roles.DrownedRole;
 import com.whymertech.worldresetondeath.roles.BlackSmithRole;
 import com.whymertech.worldresetondeath.roles.EnchanterRole;
 import com.whymertech.worldresetondeath.roles.TheHatRole;
+import com.whymertech.worldresetondeath.roles.UndeadRole;
 import com.whymertech.worldresetondeath.roles.Role;
 
 import java.io.File;
@@ -326,6 +328,8 @@ public class GameManager {
         creator.seed(seed);
         World newWorld = Bukkit.createWorld(creator);
         newWorld.setDifficulty(Difficulty.HARD);
+        newWorld.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
+        newWorld.setGameRule(GameRule.KEEP_INVENTORY, true);
 
         plugin.getLogger().info("World has been reset with seed " + seed + " and set to hardcore mode!");
 
@@ -341,6 +345,8 @@ public class GameManager {
         World newWorld = Bukkit.createWorld(loadWorldNether);
         newWorld.setDifficulty(Difficulty.HARD);
         newWorld.setPVP(true);
+        newWorld.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
+        newWorld.setGameRule(GameRule.KEEP_INVENTORY, true);
 
         plugin.getLogger().info("Nether has been created");
     }
@@ -352,6 +358,8 @@ public class GameManager {
         loadWorldEnd.environment(World.Environment.THE_END);
         World newWorld = Bukkit.createWorld(loadWorldEnd);
         newWorld.setDifficulty(Difficulty.HARD);
+        newWorld.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
+        newWorld.setGameRule(GameRule.KEEP_INVENTORY, true);
 
         plugin.getLogger().info("The End has been created");
     }
@@ -451,6 +459,9 @@ public class GameManager {
                 break;
             case "thehat":
                 role = new TheHatRole(player);
+                break;
+            case "undead":
+                role = new UndeadRole(player);
                 break;
             default:
                 role = null;

@@ -24,7 +24,9 @@ public class ResetPlayerCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (player.isOp()) { // Check if the player is an operator
-                    Player target = Bukkit.getPlayer(args[0]);
+                    String playerName = args[0];
+                    if (playerName.isEmpty()) playerName = player.getName();
+                    Player target = Bukkit.getPlayer(playerName);
                     if (target != null) {
                         gameManager.removeRole(player);
                         gameManager.resetPlayer(target);
