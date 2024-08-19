@@ -27,7 +27,7 @@ public class PortalListener implements Listener {
 
         String worldName = GameManager.WORLD_NAME;
         String netherWorldName = GameManager.WORLD_NAME + "_nether";
-        //String endWorldName = GameManager.WORLD_NAME + "_the_end";
+        String endWorldName = GameManager.WORLD_NAME + "_the_end";
 
 
         if (event.getCause() == PlayerPortalEvent.TeleportCause.NETHER_PORTAL) {
@@ -48,6 +48,16 @@ public class PortalListener implements Listener {
                     event.setTo(mainWorldLocation);
                     player.sendMessage("Teleporting to " + mainWorld.getName());
                     plugin.getLogger().info("Teleporting to " + mainWorld.getName());
+                }
+            }
+        } else if (event.getCause() == PlayerPortalEvent.TeleportCause.END_PORTAL) {
+            if (fromWorld.getName().equals(worldName)) {
+                World endWorld = Bukkit.getWorld(endWorldName);
+                if (endWorld != null) {
+                    Location endLocation = endWorld.getSpawnLocation();
+                    event.setTo(endLocation);
+                    player.sendMessage("Teleporting to " + endWorld.getName());
+                    plugin.getLogger().info("Teleporting to " + endWorld.getName());
                 }
             }
         } else {
