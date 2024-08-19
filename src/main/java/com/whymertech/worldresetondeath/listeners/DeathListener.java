@@ -1,6 +1,7 @@
 package com.whymertech.worldresetondeath.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -72,6 +73,11 @@ public class DeathListener implements Listener {
 
         // Spawn a zombie at world spawn with player's name
         Location spawnLocation = world.getSpawnLocation();
+        Chunk chunk = spawnLocation.getChunk();
+
+        // Load the chunk and keep it loaded
+        chunk.load(true);
+        
         Zombie playerZombie = world.spawn(spawnLocation, Zombie.class);
         playerZombie.setCustomName(player.getName());
         playerZombie.setCustomNameVisible(true);
