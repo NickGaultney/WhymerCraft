@@ -57,6 +57,7 @@ public class DeathListener implements Listener {
             return;
         }
 
+        // TODO: This is where dead players are referenced. I believe the log file isn't used ever as reference. We should have some way to override death 
         deadPlayers.add(player.getUniqueId());
 
         // Prevent the normal death process
