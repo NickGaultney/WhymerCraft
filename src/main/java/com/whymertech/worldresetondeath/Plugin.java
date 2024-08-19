@@ -44,6 +44,7 @@ public class Plugin extends JavaPlugin implements Listener
 
     private GameManager gameManager;
     private SeedManager seedManager;
+    private ObjectiveManager objectiveManager;
     Utils utils = new Utils(this);
 
 
@@ -53,6 +54,7 @@ public class Plugin extends JavaPlugin implements Listener
         
         gameManager = new GameManager(this);
         seedManager = gameManager.getSeedManager();
+        objectiveManager = gameManager.getObjectiveManager();
 
         getServer().getPluginManager().registerEvents(this, this); // Registering the main class as the listener
         getServer().getPluginManager().registerEvents(new PortalListener(this), this);
@@ -64,7 +66,7 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new LobbyItemListener(), this);
         getServer().getPluginManager().registerEvents(new MobDamageListener(gameManager), this);
 
-
+        getServer().getPluginManager().registerEvents(objectiveManager, this);
         getServer().getPluginManager().registerEvents(new UndeadRole(gameManager), this);        
         
         getCommand("kys").setExecutor(new KysCommand(this, gameManager)); // Registering the kys command
