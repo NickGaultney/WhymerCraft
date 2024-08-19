@@ -1,6 +1,7 @@
 package com.whymertech.worldresetondeath.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -57,6 +58,7 @@ public class DeathListener implements Listener {
             return;
         }
 
+        // TODO: This is where dead players are referenced. I believe the log file isn't used ever as reference. We should have some way to override death 
         deadPlayers.add(player.getUniqueId());
 
         // Prevent the normal death process
@@ -71,6 +73,11 @@ public class DeathListener implements Listener {
 
         // Spawn a zombie at world spawn with player's name
         Location spawnLocation = world.getSpawnLocation();
+        Chunk chunk = spawnLocation.getChunk();
+
+        // Load the chunk and keep it loaded
+        chunk.load(true);
+        
         Zombie playerZombie = world.spawn(spawnLocation, Zombie.class);
         playerZombie.setCustomName(player.getName());
         playerZombie.setCustomNameVisible(true);

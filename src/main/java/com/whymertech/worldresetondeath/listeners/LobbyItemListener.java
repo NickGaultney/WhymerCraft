@@ -72,8 +72,9 @@ public class LobbyItemListener implements Listener {
         menu.setItem(21, createMenuItem(Material.TRIDENT, ChatColor.GREEN + "Drowned"));
         menu.setItem(23, createMenuItem(Material.ANVIL, ChatColor.BLUE + "Blacksmith"));
         menu.setItem(25, createMenuItem(Material.ENCHANTING_TABLE, ChatColor.GOLD + "Enchanter"));
-        menu.setItem(28, createMenuItem(Material.PUMPKIN, ChatColor.RED + "The Hat"));
+        menu.setItem(28, createMenuItem(Material.ELYTRA, ChatColor.RED + "The Hat"));
         menu.setItem(30, createMenuItem(Material.ZOMBIE_HEAD, ChatColor.GREEN + "Undead"));
+        menu.setItem(32, createMenuItem(Material.FISHING_ROD, ChatColor.BLUE + "Fisherman"));
 
         menu.setItem(45, createMenuItem(Material.LECTERN, ChatColor.WHITE + "Role Info"));
 
@@ -93,8 +94,9 @@ public class LobbyItemListener implements Listener {
         menu.setItem(21, createMenuItem(Material.TRIDENT, ChatColor.GREEN + "Drowned"));
         menu.setItem(23, createMenuItem(Material.ANVIL, ChatColor.BLUE + "Blacksmith"));
         menu.setItem(25, createMenuItem(Material.ENCHANTING_TABLE, ChatColor.GOLD + "Enchanter"));
-        menu.setItem(28, createMenuItem(Material.PUMPKIN, ChatColor.RED + "The Hat"));
+        menu.setItem(28, createMenuItem(Material.ELYTRA, ChatColor.RED + "The Hat"));
         menu.setItem(30, createMenuItem(Material.ZOMBIE_HEAD, ChatColor.GREEN + "Undead"));
+        menu.setItem(32, createMenuItem(Material.FISHING_ROD, ChatColor.BLUE + "Fisherman"));
 
         menu.setItem(45, createMenuItem(Material.ENDER_PEARL, ChatColor.WHITE + "Role Selector"));
 
@@ -162,6 +164,10 @@ public class LobbyItemListener implements Listener {
                 player.performCommand("role undead");
                 player.performCommand("join");
                 break;
+            case FISHING_ROD:
+                player.performCommand("role fisherman");
+                player.performCommand("join");
+                break;
             case LECTERN:
                 openRoleInfoMenu(player);
                 return;
@@ -219,6 +225,10 @@ public class LobbyItemListener implements Listener {
                 break;
             case ZOMBIE_HEAD:
                 player.performCommand("role undead");
+                player.performCommand("join");
+                break;
+            case FISHING_ROD:
+                player.performCommand("role fisherman");
                 player.performCommand("join");
                 break;
             case ENDER_PEARL:

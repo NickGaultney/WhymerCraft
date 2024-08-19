@@ -6,6 +6,7 @@ import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -47,13 +48,16 @@ public class GameManager {
     private File gameLogFile;
     private int gameNumber;
     private SeedManager seedManager;
+    private ObjectiveManager objectiveManager;
     public double mobMultiplier = 1.0;
+    public Material objectiveMaterial;
 
     private Plugin plugin;
 
     public GameManager(Plugin plugin) {
         this.plugin = plugin;
         this.seedManager = new SeedManager(plugin);
+        this.objectiveManager = new ObjectiveManager(plugin, this);
         
         initGameLogFile();
         loadWorld();
@@ -72,6 +76,9 @@ public class GameManager {
             loadWorldEnd.environment(World.Environment.THE_END);
             Bukkit.createWorld(loadWorldEnd);
             plugin.getLogger().info("Loading your hardcore world");
+
+            loadObjective();
+            plugin.getLogger().info("Loading the objective");
             return true;
         }
         plugin.getLogger().info("Coulnd't find world to load");
@@ -169,18 +176,21 @@ public class GameManager {
                 recreateWorlds(); 
             }
         }.runTaskLater(plugin, RECREATE_DELAY); // Delay to give time for death event to be fully processed
+        // TODO: Is the delay even neccessary anymore?
         
     }
 
-    private void updateGameNumber() {
+    private void updateGameData() {
         YamlConfiguration gameLog = YamlConfiguration.loadConfiguration(gameLogFile);
-
+        objectiveMaterial = objectiveManager.selectRandomObjective();
         gameNumber++;
 
         gameLog.set("current_game.number", gameNumber);
+        gameLog.set("current_game.objective", objectiveMaterial.getKey().toString());
         gameLog.set("games.game_" + gameNumber + ".number", gameNumber);
         gameLog.set("games.game_" + gameNumber + ".mobMultiplier", 1.0);
         gameLog.set("games.game_" + gameNumber + ".deadPlayers", 0);
+        gameLog.set("games.game_" + gameNumber + ".objective", objectiveMaterial.getKey().toString());
 
         // Save the updated game log
         try {
@@ -315,7 +325,9 @@ public class GameManager {
         Bukkit.broadcastMessage("Creating The End...");
         recreateWorldEnd();
 
-        updateGameNumber();
+        updateGameData();
+        objectiveManager.resetGlobalInventory();
+        objectiveManager.giveObjectiveBook();
         Bukkit.broadcastMessage("Worlds Loaded.");
     }
 
@@ -332,7 +344,7 @@ public class GameManager {
         newWorld.setGameRule(GameRule.KEEP_INVENTORY, true);
 
         plugin.getLogger().info("World has been reset with seed " + seed + " and set to hardcore mode!");
-
+        objectiveManager.createSpecialEnderChest(newWorld.getSpawnLocation());
         
         return newWorld;
     }
@@ -389,6 +401,8 @@ public class GameManager {
             YamlConfiguration gameLog = YamlConfiguration.loadConfiguration(gameLogFile);
             gameNumber = gameLog.getInt("current_game.number", 0);
             mobMultiplier = gameLog.getDouble("games.game_" + gameNumber + ".mobMultiplier", 1.0);
+            objectiveMaterial = objectiveManager.getMaterialFromString(gameLog.getString("current_game.objective"));
+            objectiveManager.giveObjectiveBook();
         }
     }
 
@@ -425,6 +439,10 @@ public class GameManager {
 
         String roleName =  gameLog.getString("games.game_" + gameNumber + ".players." + player.getName() + ".role", "");
         return getRoleFromName(player, roleName);
+    }
+
+    public void setGameObjective() {
+        objectiveManager.selectRandomObjective();
     }
 
     public Role getRoleFromName(Player player, String roleName) {
@@ -481,5 +499,17 @@ public class GameManager {
 
     public SeedManager getSeedManager() {
         return seedManager;
+    }
+
+    public ObjectiveManager getObjectiveManager() {
+        return objectiveManager;
+    }
+
+    public Material getObjectiveMaterial() {
+        return objectiveMaterial;
+    }
+
+    private void loadObjective() {
+        objectiveManager.giveObjectiveBook();
     }
 }
