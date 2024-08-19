@@ -61,8 +61,6 @@ public class GameManager {
         
         initGameLogFile();
         loadWorld();
-
-        objectiveManager.giveObjectiveBook();
     }
 
     public boolean loadWorld() {
@@ -78,6 +76,9 @@ public class GameManager {
             loadWorldEnd.environment(World.Environment.THE_END);
             Bukkit.createWorld(loadWorldEnd);
             plugin.getLogger().info("Loading your hardcore world");
+
+            loadObjective();
+            plugin.getLogger().info("Loading the objective");
             return true;
         }
         plugin.getLogger().info("Coulnd't find world to load");
@@ -175,6 +176,7 @@ public class GameManager {
                 recreateWorlds(); 
             }
         }.runTaskLater(plugin, RECREATE_DELAY); // Delay to give time for death event to be fully processed
+        // TODO: Is the delay even neccessary anymore?
         
     }
 
@@ -188,6 +190,7 @@ public class GameManager {
         gameLog.set("games.game_" + gameNumber + ".number", gameNumber);
         gameLog.set("games.game_" + gameNumber + ".mobMultiplier", 1.0);
         gameLog.set("games.game_" + gameNumber + ".deadPlayers", 0);
+        gameLog.set("games.game_" + gameNumber + ".objective", objectiveMaterial.getKey().toString());
 
         // Save the updated game log
         try {
@@ -324,6 +327,7 @@ public class GameManager {
 
         updateGameData();
         objectiveManager.resetGlobalInventory();
+        objectiveManager.giveObjectiveBook();
         Bukkit.broadcastMessage("Worlds Loaded.");
     }
 
@@ -503,5 +507,9 @@ public class GameManager {
 
     public Material getObjectiveMaterial() {
         return objectiveMaterial;
+    }
+
+    private void loadObjective() {
+        objectiveManager.giveObjectiveBook();
     }
 }
