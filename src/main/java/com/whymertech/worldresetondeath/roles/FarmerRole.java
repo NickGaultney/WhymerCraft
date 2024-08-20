@@ -77,8 +77,10 @@ public class FarmerRole extends GenericRole implements Listener {
         ItemStack glow = new ItemStack(Material.GLOW_BERRIES, 1);
         ItemStack redMush = new ItemStack(Material.RED_MUSHROOM, 1);
         ItemStack brownMush = new ItemStack(Material.BROWN_MUSHROOM, 1);
+        ItemStack chorusFruit = new ItemStack(Material.CHORUS_FRUIT, 1);
 
         ItemStack endStone = new ItemStack(Material.END_STONE, 32);
+        ItemStack water = new ItemStack(Material.WATER_BUCKET, 2);
 
         
         ItemMeta hoeMeta = diamondHoe.getItemMeta();
@@ -115,7 +117,7 @@ public class FarmerRole extends GenericRole implements Listener {
         giveBaseAxe();
         giveBasePickaxe();
         super.player.getInventory().addItem(diamondHoe, diamondShovel, potatoes, carrots, seeds, melon_seeds, pumpkin_seeds, beetroot_seeds, sugarcane, cactus);
-        super.player.getInventory().addItem(pickle, bamboo, coco, warts, berry, kelp, glow, redMush, brownMush, endStone);
+        super.player.getInventory().addItem(pickle, bamboo, coco, warts, berry, kelp, glow, redMush, brownMush, endStone, chorusFruit, water);
     }
 
     @Override
