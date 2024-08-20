@@ -62,7 +62,7 @@ public class ArcherRole extends GenericRole{
         ItemMeta bowMeta = bow.getItemMeta();
         if (bowMeta != null) {
             bowMeta.addEnchant(Enchantment.INFINITY, 1, true);
-            bowMeta.addEnchant(Enchantment.PUNCH, 2, true);
+            bowMeta.addEnchant(Enchantment.POWER, 5, true);
             bowMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
             bowMeta.addEnchant(Enchantment.MENDING, 1, true);
 
@@ -71,7 +71,7 @@ public class ArcherRole extends GenericRole{
             // Add custom attributes
             AttributeModifier damageModifier = new AttributeModifier(
                     key, 
-                    6.0, // Additional attack damage
+                    5.0, // Additional attack damage
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.HAND
             );
@@ -94,6 +94,11 @@ public class ArcherRole extends GenericRole{
     @Override
     public boolean canDoubleJump() {
         return true;
+    }
+
+    @Override
+    public Material favoriteFood() {
+        return Material.WHEAT;
     }
 
     public void addEffects() {

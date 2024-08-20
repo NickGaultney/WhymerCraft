@@ -71,21 +71,6 @@ public class UndeadRole extends GenericRole implements Listener {
         super.player.getInventory().addItem(rottenFlesh);
     }
 
-    // @EventHandler
-    // public void onPlayerToggleSprint(PlayerToggleSprintEvent event) {
-    //     Player player = event.getPlayer();
-    //     Role playerRole = gameManager.getRole(player);
-
-    //     if (playerRole == null) return;
-
-    //     // Check if the player has the "Undead" role and cancel sprinting if they do
-    //     if (playerRole instanceof UndeadRole) {
-    //         event.setCancelled(true);
-    //         Bukkit.broadcastMessage("No Sprinting");
-    //         player.setSprinting(false);
-    //     }
-    // }
-
     @EventHandler
     public void onEntityTarget(EntityTargetLivingEntityEvent event) {
         if (event.getTarget() instanceof Player) {
@@ -179,5 +164,10 @@ public class UndeadRole extends GenericRole implements Listener {
                 player.setFireTicks(20 * 3); // Burn the player for 5 seconds
             }
         }
+    }
+
+    @Override
+    public Material favoriteFood() {
+        return Material.NETHER_WART;
     }
 }

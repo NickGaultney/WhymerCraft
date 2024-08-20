@@ -135,4 +135,9 @@ public class FisherManRole extends GenericRole implements Listener {
             }
         }
     }
+
+    @Override
+    public Material favoriteFood() {
+        return Material.SUGAR_CANE;
+    }
 }

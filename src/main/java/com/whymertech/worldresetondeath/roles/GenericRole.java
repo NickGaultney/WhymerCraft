@@ -47,6 +47,11 @@ public class GenericRole implements Role {
         return "Generic";
     }
 
+    @Override
+    public Material favoriteFood() {
+        return Material.RED_MUSHROOM;
+    }
+
     public void giveBaseAxe() {
         ItemStack ironAxe = new ItemStack(Material.IRON_AXE);
 

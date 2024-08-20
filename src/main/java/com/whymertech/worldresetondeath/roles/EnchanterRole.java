@@ -72,6 +72,11 @@ public class EnchanterRole extends GenericRole {
         super.player.getInventory().addItem(bookShelves);
     }
 
+    @Override
+    public Material favoriteFood() {
+        return Material.COCOA_BEANS;
+    }
+
     public void addEffects() {
         addWeakness();
     }
