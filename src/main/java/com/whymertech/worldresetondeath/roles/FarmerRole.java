@@ -152,6 +152,8 @@ public class FarmerRole extends GenericRole implements Listener {
                 // Consume the bread stack
                 food.setAmount(0);
                 player.getInventory().setItemInMainHand(null);
+            } else {
+                player.sendMessage("The " + targetRole.name() + "\'s favorite food is " + targetRole.favoriteFood().toString());
             }
         }
     }
