@@ -401,7 +401,13 @@ public class GameManager {
             YamlConfiguration gameLog = YamlConfiguration.loadConfiguration(gameLogFile);
             gameNumber = gameLog.getInt("current_game.number", 0);
             mobMultiplier = gameLog.getDouble("games.game_" + gameNumber + ".mobMultiplier", 1.0);
-            objectiveMaterial = objectiveManager.getMaterialFromString(gameLog.getString("current_game.objective"));
+            String storedObjective = gameLog.getString("current_game.objective");
+            if (storedObjective != null) {
+                objectiveMaterial = objectiveManager.getMaterialFromString(storedObjective);
+            } else {
+                objectiveMaterial = objectiveManager.selectRandomObjective();
+                gameLog.set("current_game.objective", objectiveMaterial.getKey().toString());
+            }
             objectiveManager.giveObjectiveBook();
         }
     }
