@@ -111,7 +111,7 @@ public class GenericRole implements Role {
         int duration = Integer.MAX_VALUE; // Practically infinite duration
 
         // Apply Speed I effect
-        PotionEffect speedEffect = new PotionEffect(PotionEffectType.SPEED, duration, speedModifier, false, false);
+        PotionEffect speedEffect = new PotionEffect(PotionEffectType.SPEED, PotionEffect.INFINITE_DURATION, speedModifier, false, false);
         player.addPotionEffect(speedEffect);
     }
     

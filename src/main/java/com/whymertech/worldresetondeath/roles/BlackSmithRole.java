@@ -50,10 +50,9 @@ public class BlackSmithRole extends GenericRole {
     }
 
     public void reduceBaseSpeed() {
-        int duration = Integer.MAX_VALUE; // Practically infinite duration
 
         // Apply Speed I effect
-        PotionEffect slowness = new PotionEffect(PotionEffectType.SLOWNESS, duration, 0, false, false);
+        PotionEffect slowness = new PotionEffect(PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 0, false, false);
         super.player.addPotionEffect(slowness);
     }
 

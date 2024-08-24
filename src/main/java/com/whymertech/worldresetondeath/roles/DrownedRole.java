@@ -76,29 +76,23 @@ public class DrownedRole extends GenericRole {
     }
 
     public void addBreathingEffect() {
-        // Duration is in ticks (20 ticks = 1 second), so this is 1 hour
-        int duration = Integer.MAX_VALUE; // Practically infinite duration
 
         // Apply Speed I effect
-        PotionEffect breathingEffect = new PotionEffect(PotionEffectType.WATER_BREATHING, duration, 1, false, false);
+        PotionEffect breathingEffect = new PotionEffect(PotionEffectType.WATER_BREATHING, PotionEffect.INFINITE_DURATION, 1, false, false);
         super.player.addPotionEffect(breathingEffect);
     }
 
     public void addDolphinsGraceEffect() {
-        // Duration is in ticks (20 ticks = 1 second), so this is 1 hour
-        int duration = Integer.MAX_VALUE; // Practically infinite duration
 
         // Apply Speed I effect
-        PotionEffect dolphinsGrace = new PotionEffect(PotionEffectType.DOLPHINS_GRACE, duration, 1, false, false);
+        PotionEffect dolphinsGrace = new PotionEffect(PotionEffectType.DOLPHINS_GRACE, PotionEffect.INFINITE_DURATION, 1, false, false);
         super.player.addPotionEffect(dolphinsGrace);
     }
 
     public void addNightVision() {
-        // Duration is in ticks (20 ticks = 1 second), so this is 1 hour
-        int duration = Integer.MAX_VALUE; // Practically infinite duration
 
         // Apply Speed I effect
-        PotionEffect nightVision = new PotionEffect(PotionEffectType.NIGHT_VISION, duration, 1, false, false);
+        PotionEffect nightVision = new PotionEffect(PotionEffectType.NIGHT_VISION, PotionEffect.INFINITE_DURATION, 1, false, false);
         super.player.addPotionEffect(nightVision);
     }
 
