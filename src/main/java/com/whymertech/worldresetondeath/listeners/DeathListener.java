@@ -24,6 +24,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.whymertech.worldresetondeath.GameManager;
@@ -85,6 +86,8 @@ public class DeathListener implements Listener {
         playerZombie.setHealth(20.0); // Set zombie's health
         playerZombie.setPersistent(true);
         playerZombie.setMetadata("playerUUID", new FixedMetadataValue(plugin, playerUUID.toString()));
+        playerZombie.setRemoveWhenFarAway(false);
+        playerZombie.setAdult();
     }
 
     @EventHandler
