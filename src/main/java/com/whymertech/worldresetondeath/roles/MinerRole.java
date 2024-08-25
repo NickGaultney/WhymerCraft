@@ -7,21 +7,31 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.attribute.Attribute;
 
 import com.whymertech.worldresetondeath.GameManager;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import java.util.Random;
 
-public class MinerRole extends GenericRole {
+public class MinerRole extends GenericRole implements Listener {
 
     private double health = 18.0;
+
+    public MinerRole(GameManager gameManager) {
+        super(gameManager);
+    }
 
     public MinerRole(Player player) {
         super(player);
@@ -156,5 +166,27 @@ public class MinerRole extends GenericRole {
     @Override
     public Material favoriteFood() {
         return Material.MELON;
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        Role playerRole = gameManager.getRole(player);
+
+        // Check if the player has the Farmer role
+        if (playerRole instanceof MinerRole) {
+            if (event.getItem().getType() == Material.DIAMOND_PICKAXE && event.getAction() == Action.RIGHT_CLICK_AIR) {
+                Location originalLocation = player.getLocation();
+                player.setGameMode(GameMode.SPECTATOR);
+
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                         player.teleport(originalLocation);
+                         player.setGameMode(GameMode.SURVIVAL);
+                    }
+                }.runTaskLater(Bukkit.getPluginManager().getPlugin("worldresetondeath"), 100L);
+            }
+        }
     }
 }

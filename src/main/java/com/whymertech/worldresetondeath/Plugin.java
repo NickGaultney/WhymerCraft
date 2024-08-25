@@ -21,6 +21,7 @@ import com.whymertech.worldresetondeath.tabCompleters.ResetPlayerTabCompleter;
 import com.whymertech.worldresetondeath.tabCompleters.RoleTabCompleter;
 import com.whymertech.worldresetondeath.roles.FarmerRole;
 import com.whymertech.worldresetondeath.roles.FisherManRole;
+import com.whymertech.worldresetondeath.roles.MinerRole;
 import com.whymertech.worldresetondeath.roles.UndeadRole;
 
 import org.bukkit.event.Listener;
@@ -70,7 +71,8 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(objectiveManager, this);
         getServer().getPluginManager().registerEvents(new UndeadRole(gameManager), this);      
         getServer().getPluginManager().registerEvents(new FisherManRole(gameManager), this); 
-        getServer().getPluginManager().registerEvents(new FarmerRole(gameManager), this);        
+        getServer().getPluginManager().registerEvents(new FarmerRole(gameManager), this);
+        getServer().getPluginManager().registerEvents(new MinerRole(gameManager), this);        
         
         getCommand("kys").setExecutor(new KysCommand(this, gameManager)); // Registering the kys command
         getCommand("join").setExecutor(new JoinCommand(this, gameManager)); // Registering the join command
