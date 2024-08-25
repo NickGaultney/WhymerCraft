@@ -72,7 +72,7 @@ public class FarmerRole extends GenericRole implements Listener {
         ItemStack bamboo = new ItemStack(Material.BAMBOO, 1);
         ItemStack coco = new ItemStack(Material.COCOA_BEANS, 1);
         ItemStack warts = new ItemStack(Material.NETHER_WART, 1);
-        ItemStack berry = new ItemStack(Material.SWEET_BERRY_BUSH, 1);
+        ItemStack berry = new ItemStack(Material.SWEET_BERRIES, 1);
         ItemStack kelp = new ItemStack(Material.KELP, 1);
         ItemStack glow = new ItemStack(Material.GLOW_BERRIES, 1);
         ItemStack redMush = new ItemStack(Material.RED_MUSHROOM, 1);
