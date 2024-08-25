@@ -99,7 +99,7 @@ public class FarmerRole extends GenericRole implements Listener {
             // Add custom attributes
             AttributeModifier damageModifier = new AttributeModifier(
                     key, 
-                    6.0, // Additional attack damage
+                    5.0, // Additional attack damage
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.HAND
             );
