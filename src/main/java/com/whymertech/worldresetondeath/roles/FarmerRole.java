@@ -168,7 +168,13 @@ public class FarmerRole extends GenericRole implements Listener {
         for (PotionEffect effect : player.getActivePotionEffects()) {
             // Check if the potion effect is positive
             if (isPositiveEffect(effect)) {
-                int newDuration = effect.getDuration() + (minutes * 60 * 20); // 1 minute = 60 seconds * 20 ticks
+                int newDuration;
+                if (effect.getDuration() >= (4 * 60 * 60 * 20)) {
+                    newDuration = -1; // Set Infinite duration
+                } else {
+                    newDuration = effect.getDuration() + (minutes * 60 * 20); // 1 minute = 60 seconds * 20 ticks
+                }
+                
                 PotionEffect newEffect = new PotionEffect(effect.getType(), newDuration, effect.getAmplifier(), effect.isAmbient(), false, effect.hasIcon());
                 player.addPotionEffect(newEffect);
             }
