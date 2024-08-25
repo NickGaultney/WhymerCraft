@@ -76,7 +76,7 @@ public class FisherManRole extends GenericRole implements Listener {
             // Add custom attributes
             AttributeModifier damageModifier = new AttributeModifier(
                     key, 
-                    6.0, // Additional attack damage
+                    5.0, // Additional attack damage
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.HAND
             );
@@ -100,7 +100,7 @@ public class FisherManRole extends GenericRole implements Listener {
             // Check if the player has the fisherman role
             if (playRole instanceof FisherManRole) {
                 Random random = new Random();
-                int chance = random.nextInt(1000); // 0 to 99
+                int chance = random.nextInt(1000); // 0 to 999
 
                 // Get the caught item
                 Item caught = (Item) event.getCaught();
@@ -108,13 +108,37 @@ public class FisherManRole extends GenericRole implements Listener {
 
                 Bukkit.getPluginManager().getPlugin("worldresetondeath").getLogger().info("Fishing chance: " + chance);
                 if (chance < 10) {
-                    newItem = new ItemStack(Material.BLAZE_ROD);
+                    newItem = new ItemStack(Material.BLAZE_ROD, random.nextInt(8) + 1);
                 } else if (chance < 15) {
-                    newItem = new ItemStack(Material.NETHER_WART);
+                    newItem = new ItemStack(Material.NETHER_WART, random.nextInt(8) + 1);
                 } else if (chance < 25) {
-                    newItem = new ItemStack(Material.ENDER_PEARL);
+                    newItem = new ItemStack(Material.ENDER_PEARL, random.nextInt(8) + 1);
                 } else if (chance < 30) {
-                        newItem = new ItemStack(Material.SPAWNER);
+                    newItem = new ItemStack(Material.SPAWNER);
+                } else if (chance < 35) {
+                    newItem = new ItemStack(Material.SOUL_SAND, random.nextInt(16) + 1);
+                } else if (chance < 40) {
+                    newItem = new ItemStack(Material.FERMENTED_SPIDER_EYE, random.nextInt(4) + 1);
+                } else if (chance < 45) {
+                    newItem = new ItemStack(Material.GUNPOWDER, random.nextInt(32) + 1);
+                } else if (chance == 990) {
+                    newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(16) + 1);
+                    super.enchantItem(Enchantment.FEATHER_FALLING, 255, newItem);
+                } else if (chance == 991) {
+                    newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(4) + 1);
+                    super.enchantItem(Enchantment.SHARPNESS, 7, newItem);
+                    super.enchantItem(Enchantment.LOOTING, 5, newItem);
+                } else if (chance == 992) {
+                    newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(4) + 1);
+                    super.enchantItem(Enchantment.INFINITY, 1, newItem);
+                    super.enchantItem(Enchantment.POWER, 7, newItem);
+                } else if (chance == 993) {
+                    newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(4) + 1);
+                    super.enchantItem(Enchantment.EFFICIENCY, 7, newItem);
+                    super.enchantItem(Enchantment.FORTUNE, 5, newItem);
+                } else if (chance == 994) {
+                    newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(32) + 1);
+                    super.enchantItem(Enchantment.MENDING, 1, newItem);
                 } else if (chance == 995) {
                     newItem = new ItemStack(Material.SKELETON_SPAWN_EGG);
                 } else if (chance == 996) {
@@ -124,7 +148,7 @@ public class FisherManRole extends GenericRole implements Listener {
                 } else if (chance == 998) {
                     newItem = new ItemStack(Material.COW_SPAWN_EGG);
                 } else if (chance == 999) {
-                    newItem = new ItemStack(Material.ANCIENT_DEBRIS);
+                    newItem = new ItemStack(Material.ANCIENT_DEBRIS, random.nextInt(16) + 1);
                 } else {
                     return;
                 }
