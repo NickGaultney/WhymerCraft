@@ -175,6 +175,8 @@ public class MinerRole extends GenericRole implements Listener {
 
         // Check if the player has the Farmer role
         if (playerRole instanceof MinerRole) {
+            if (event.getItem() == null) return;
+
             if (event.getItem().getType() == Material.DIAMOND_PICKAXE && event.getAction() == Action.RIGHT_CLICK_AIR) {
                 Location originalLocation = player.getLocation();
                 player.setGameMode(GameMode.SPECTATOR);
@@ -185,7 +187,7 @@ public class MinerRole extends GenericRole implements Listener {
                          player.teleport(originalLocation);
                          player.setGameMode(GameMode.SURVIVAL);
                     }
-                }.runTaskLater(Bukkit.getPluginManager().getPlugin("worldresetondeath"), 100L);
+                }.runTaskLater(Bukkit.getPluginManager().getPlugin("worldresetondeath"), 300L);
             }
         }
     }
