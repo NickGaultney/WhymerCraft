@@ -109,4 +109,9 @@ public class TheHatRole extends GenericRole {
 
         super.player.getInventory().addItem(elytra, rockets);
     }
+
+    @Override
+    public Material favoriteFood() {
+        return Material.CHORUS_FRUIT;
+    }
 }

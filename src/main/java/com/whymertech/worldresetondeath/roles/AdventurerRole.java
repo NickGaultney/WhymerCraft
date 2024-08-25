@@ -2,6 +2,7 @@ package com.whymertech.worldresetondeath.roles;
 
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -48,20 +49,36 @@ public class AdventurerRole extends GenericRole {
     }
 
     public void giveItems() {
+        ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
         ItemStack shield = new ItemStack(Material.SHIELD);
         ItemStack bow = new ItemStack(Material.BOW);
+        ItemStack arrows = new ItemStack(Material.ARROW, 64);
+        
+        super.enchantItem(Enchantment.MENDING, 1, sword);
+        super.enchantItem(Enchantment.UNBREAKING, 255, sword);
+        super.enchantItem(Enchantment.SWEEPING_EDGE, 5, sword);
 
-        giveBaseSword();
+        super.enchantItem(Enchantment.MENDING, 1, shield);
+        super.enchantItem(Enchantment.UNBREAKING, 255, shield);
+
+        super.enchantItem(Enchantment.MENDING, 1, bow);
+        super.enchantItem(Enchantment.UNBREAKING, 255, bow);
+
         giveBasePickaxe();
         giveBaseAxe();
         giveBaseShovel();
 
-        super.player.getInventory().addItem(shield, bow);
+        super.player.getInventory().addItem(sword, shield, bow, arrows);
     }
 
     @Override
     public boolean canDoubleJump() {
         return true;
+    }
+
+    @Override
+    public Material favoriteFood() {
+        return Material.BROWN_MUSHROOM;
     }
 
     public void addEffects() {

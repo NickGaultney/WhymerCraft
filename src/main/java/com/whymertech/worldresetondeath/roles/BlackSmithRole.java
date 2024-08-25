@@ -75,6 +75,11 @@ public class BlackSmithRole extends GenericRole {
         super.player.getInventory().addItem(helmet, chestPlate, leggings, boots, anvil);
     }
 
+    @Override
+    public Material favoriteFood() {
+        return Material.CACTUS;
+    }
+
     public void addEffects() {
         reduceBaseSpeed();
     }

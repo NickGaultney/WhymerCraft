@@ -1,6 +1,7 @@
 package com.whymertech.worldresetondeath.roles;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 public interface Role {
     Location getRoleSpawnLocation();
@@ -9,4 +10,5 @@ public interface Role {
     boolean canDoubleJump();
     String name();
     void addEffects();
+    Material favoriteFood();
 }

@@ -152,4 +152,9 @@ public class MinerRole extends GenericRole {
     public void removeEffects() {
         super.player.removePotionEffect(PotionEffectType.NIGHT_VISION);
     }
+
+    @Override
+    public Material favoriteFood() {
+        return Material.MELON;
+    }
 }

@@ -102,6 +102,11 @@ public class DrownedRole extends GenericRole {
         super.player.removePotionEffect(PotionEffectType.NIGHT_VISION);
     }
 
+    @Override
+    public Material favoriteFood() {
+        return Material.SEA_PICKLE;
+    }
+
     public void addEffects() {
         addBreathingEffect();
         addDolphinsGraceEffect();

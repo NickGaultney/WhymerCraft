@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -133,6 +134,48 @@ public class FisherManRole extends GenericRole implements Listener {
                     caught.setItemStack(newItem);
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerConsume(PlayerItemConsumeEvent event) {
+        Player player = event.getPlayer();
+        Role playerRole = gameManager.getRole(player);
+
+        if (playerRole == null) return;
+
+        // Check if the player has the Undead role
+        if (playerRole instanceof FisherManRole) {
+            Material food = event.getItem().getType();
+
+            if (isFish(food)) {
+                player.setSaturation((player.getSaturation() + 12));
+                player.setFoodLevel(player.getFoodLevel() + 4);
+            } 
+        }
+    }
+
+    @Override
+    public Material favoriteFood() {
+        return Material.SUGAR_CANE;
+    }
+
+    // Method to check if an item is a type of fish
+    private boolean isFish(Material food) {
+        if (food == null || food == Material.AIR) {
+            return false;
+        }
+        
+        switch (food) {
+            case COD:
+            case SALMON:
+            case TROPICAL_FISH:
+            case PUFFERFISH:
+            case COOKED_COD:
+            case COOKED_SALMON:
+                return true;
+            default:
+                return false;
         }
     }
 }

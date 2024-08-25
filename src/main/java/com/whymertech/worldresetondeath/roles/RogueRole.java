@@ -77,7 +77,7 @@ public class RogueRole extends GenericRole {
 
             AttributeModifier attackSpeedAttributeModifier = new AttributeModifier(
                     attackSpeedKey,
-                    -3.6,
+                    -3.4,
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.HAND
             );
@@ -104,5 +104,10 @@ public class RogueRole extends GenericRole {
 
     public void addEffects() {
         super.addSpeedEffect(speedLevel);
+    }
+
+    @Override
+    public Material favoriteFood() {
+        return Material.SUGAR;
     }
 }
