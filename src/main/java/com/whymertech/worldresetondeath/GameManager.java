@@ -44,6 +44,7 @@ public class GameManager {
     public static final long RECREATE_DELAY = 100L; // 5 second delay
     //public static final long SEED = -950547527103331411L;
     public static final long SEED = -123456789;
+    private long seed = SEED;
 
     private File gameLogFile;
     private int gameNumber;
@@ -318,6 +319,7 @@ public class GameManager {
     }
 
     private void recreateWorlds() {
+        seed = seedManager.getRandomSeedFromList();
         Bukkit.broadcastMessage("Creating the overworld...");
         recreateWorld();
         Bukkit.broadcastMessage("Creating the nether...");
@@ -336,7 +338,6 @@ public class GameManager {
         // Create a new world with the specified seed and set the difficulty to hardcore
         //plugin.getLogger().info("Creating new world with seed: " + GameManager.SEED);
         WorldCreator creator = new WorldCreator(GameManager.WORLD_NAME);
-        Long seed = seedManager.getRandomSeedFromList();
         creator.seed(seed);
         World newWorld = Bukkit.createWorld(creator);
         newWorld.setDifficulty(Difficulty.HARD);
@@ -354,6 +355,7 @@ public class GameManager {
 
         WorldCreator loadWorldNether = new WorldCreator(GameManager.WORLD_NAME + "_nether");
         loadWorldNether.environment(World.Environment.NETHER);
+        loadWorldNether.seed(seed);
         World newWorld = Bukkit.createWorld(loadWorldNether);
         newWorld.setDifficulty(Difficulty.HARD);
         newWorld.setPVP(true);
@@ -368,6 +370,7 @@ public class GameManager {
         
         WorldCreator loadWorldEnd = new WorldCreator(GameManager.WORLD_NAME + "_the_end");
         loadWorldEnd.environment(World.Environment.THE_END);
+        loadWorldEnd.seed(seed);
         World newWorld = Bukkit.createWorld(loadWorldEnd);
         newWorld.setDifficulty(Difficulty.HARD);
         newWorld.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
@@ -401,7 +404,13 @@ public class GameManager {
             YamlConfiguration gameLog = YamlConfiguration.loadConfiguration(gameLogFile);
             gameNumber = gameLog.getInt("current_game.number", 0);
             mobMultiplier = gameLog.getDouble("games.game_" + gameNumber + ".mobMultiplier", 1.0);
-            objectiveMaterial = objectiveManager.getMaterialFromString(gameLog.getString("current_game.objective"));
+            String storedObjective = gameLog.getString("current_game.objective");
+            if (storedObjective != null) {
+                objectiveMaterial = objectiveManager.getMaterialFromString(storedObjective);
+            } else {
+                objectiveMaterial = objectiveManager.selectRandomObjective();
+                gameLog.set("current_game.objective", objectiveMaterial.getKey().toString());
+            }
             objectiveManager.giveObjectiveBook();
         }
     }

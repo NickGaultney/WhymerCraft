@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 
 import com.whymertech.worldresetondeath.GameManager;
@@ -22,6 +23,7 @@ public class PortalListener implements Listener {
 
     @EventHandler
     public void onPlayerPortal(PlayerPortalEvent event) {
+        plugin.getLogger().info("player portal event");
         Player player = event.getPlayer();
         Location location = player.getLocation();
         World fromWorld = player.getWorld();
@@ -70,6 +72,25 @@ public class PortalListener implements Listener {
         } else {
             plugin.getLogger().warning("could not teleport");
         }
+    }
+
+    @EventHandler
+    public void onEntityPortal(EntityPortalEvent event) {
+        String worldName = GameManager.WORLD_NAME;
+        String netherWorldName = GameManager.WORLD_NAME + "_nether";
+        String endWorldName = GameManager.WORLD_NAME + "_the_end";
+
+        Location from = event.getFrom();
+        Location to = event.getTo();
+
+        String[] startComponents = from.getWorld().getName().split("_", 2);
+        String[] endComponents = to.getWorld().getName().split("_", 2);
+
+
+        String newTo = to.getWorld().getName().replace(endComponents[0], startComponents[0]);
+
+        to.setWorld(Bukkit.getWorld(newTo));
+
     }
 
     // Method to create a 5x5 obsidian platform and clear space above

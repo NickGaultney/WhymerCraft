@@ -24,16 +24,19 @@ public class ResetPlayerCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (player.isOp()) { // Check if the player is an operator
-                    String playerName = args[0];
+                    String playerName = "";
+                    if (args.length > 0) {
+                        playerName = args[0];
+                    }
                     if (playerName.isEmpty()) playerName = player.getName();
                     Player target = Bukkit.getPlayer(playerName);
                     if (target != null) {
                         gameManager.removeRole(player);
                         gameManager.resetPlayer(target);
                         sender.sendMessage("Resetting " + target.getName());
-                        plugin.getLogger().info(sender.getName() + " executed /resetplayer " + args[0]);
+                        plugin.getLogger().info(sender.getName() + " executed /resetplayer " + playerName);
                     } else {
-                        sender.sendMessage("Could not find player: " + args[0]);
+                        sender.sendMessage("Could not find player: " + playerName);
                     }
                 } else {
                     player.sendMessage("You do not have permission to use this command.");

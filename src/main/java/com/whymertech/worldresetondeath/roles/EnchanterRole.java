@@ -50,10 +50,9 @@ public class EnchanterRole extends GenericRole {
     }
 
     public void addWeakness() {
-        int duration = Integer.MAX_VALUE; // Practically infinite duration
 
         // Apply Speed I effect
-        PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, duration, 0, false, false);
+        PotionEffect weakness = new PotionEffect(PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, 0, false, false);
         super.player.addPotionEffect(weakness);
     }
 
