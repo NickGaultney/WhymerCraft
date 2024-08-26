@@ -51,7 +51,7 @@ public class DeathListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        World world = player.getWorld();
+        World world = Bukkit.getWorld(GameManager.WORLD_NAME);
 
         if (!deadPlayers.isEmpty()) {
             event.setDeathMessage(player.getName() + " you're dead...and so is everyone else.");
