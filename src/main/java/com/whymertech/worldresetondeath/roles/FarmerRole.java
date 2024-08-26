@@ -187,6 +187,7 @@ public class FarmerRole extends GenericRole implements Listener {
             case "speed":
             case "fast_digging": // Haste
             case "increase_damage": // Strength
+            case "strength": // Strength
             case "jump":
             case "damage_resistance":
             case "fire_resistance":
