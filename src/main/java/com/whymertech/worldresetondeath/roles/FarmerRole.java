@@ -71,18 +71,19 @@ public class FarmerRole extends GenericRole implements Listener {
         ItemStack pickle = new ItemStack(Material.SEA_PICKLE, 1);
         ItemStack bamboo = new ItemStack(Material.BAMBOO, 1);
         ItemStack coco = new ItemStack(Material.COCOA_BEANS, 1);
+        ItemStack jungle = new ItemStack(Material.JUNGLE_LOG, 32);
         ItemStack warts = new ItemStack(Material.NETHER_WART, 1);
         ItemStack berry = new ItemStack(Material.SWEET_BERRIES, 1);
         ItemStack kelp = new ItemStack(Material.KELP, 1);
         ItemStack glow = new ItemStack(Material.GLOW_BERRIES, 1);
         ItemStack redMush = new ItemStack(Material.RED_MUSHROOM, 1);
         ItemStack brownMush = new ItemStack(Material.BROWN_MUSHROOM, 1);
-        ItemStack chorusFruit = new ItemStack(Material.CHORUS_FRUIT, 1);
+        ItemStack chorusFruit = new ItemStack(Material.CHORUS_FLOWER, 1);
         ItemStack sapling = new ItemStack(Material.OAK_SAPLING, 1);
 
         ItemStack endStone = new ItemStack(Material.END_STONE, 32);
         ItemStack soulSand = new ItemStack(Material.SOUL_SAND, 32);
-        ItemStack grass = new ItemStack(Material.GRASS_BLOCK, 32);
+        ItemStack grass = new ItemStack(Material.GRASS_BLOCK, 64);
         ItemStack boneMeal = new ItemStack(Material.BONE_MEAL, 16);
         ItemStack water = new ItemStack(Material.WATER_BUCKET, 2);
 
@@ -120,7 +121,7 @@ public class FarmerRole extends GenericRole implements Listener {
 
         giveBaseAxe();
         giveBasePickaxe();
-        super.player.getInventory().addItem(diamondHoe, diamondShovel, potatoes, carrots, seeds, melon_seeds, pumpkin_seeds, beetroot_seeds, sugarcane, cactus);
+        super.player.getInventory().addItem(diamondHoe, diamondShovel, potatoes, carrots, seeds, melon_seeds, pumpkin_seeds, beetroot_seeds, sugarcane, cactus, jungle);
         super.player.getInventory().addItem(pickle, bamboo, coco, warts, berry, kelp, glow, redMush, brownMush, endStone, chorusFruit, water, sapling, soulSand, grass, boneMeal);
     }
 
@@ -186,7 +187,6 @@ public class FarmerRole extends GenericRole implements Listener {
         switch (key.getKey()) {
             case "speed":
             case "fast_digging": // Haste
-            case "increase_damage": // Strength
             case "strength": // Strength
             case "jump":
             case "damage_resistance":
