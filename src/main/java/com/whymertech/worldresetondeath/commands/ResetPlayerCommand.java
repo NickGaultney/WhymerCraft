@@ -31,7 +31,7 @@ public class ResetPlayerCommand implements CommandExecutor {
                     if (playerName.isEmpty()) playerName = player.getName();
                     Player target = Bukkit.getPlayer(playerName);
                     if (target != null) {
-                        gameManager.removeRole(player);
+                        gameManager.removeRole(target);
                         gameManager.resetPlayer(target);
                         sender.sendMessage("Resetting " + target.getName());
                         plugin.getLogger().info(sender.getName() + " executed /resetplayer " + playerName);
