@@ -18,21 +18,4 @@ public class AnvilListener implements Listener {
     public AnvilListener(GameManager gameManager) {
         this.gameManager = gameManager;
     }
-
-    @EventHandler
-    public void onPrepareAnvil(PrepareAnvilEvent event) {
-        Player player = (Player) event.getView().getPlayer();
-        if (player != null) {
-            Role playerRole = gameManager.getRole(player);
-
-            if (playerRole != null && playerRole instanceof BlackSmithRole) {
-                AnvilInventory anvilInventory = event.getInventory();
-                
-
-                // Set the repair cost to 0
-                // TODO: This is depreciated. Fix it.
-                anvilInventory.setRepairCost(0);
-            }
-        }
-    }
 }
