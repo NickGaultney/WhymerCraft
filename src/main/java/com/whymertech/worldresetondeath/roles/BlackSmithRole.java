@@ -66,13 +66,14 @@ public class BlackSmithRole extends GenericRole {
         ItemStack chestPlate = new ItemStack(Material.LEATHER_CHESTPLATE);
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+        ItemStack mace = new ItemStack(Material.MACE);
 
         giveBaseSword();
         giveBasePickaxe();
         giveBaseAxe();
         giveBaseShovel();
 
-        super.player.getInventory().addItem(helmet, chestPlate, leggings, boots, anvil);
+        super.player.getInventory().addItem(mace, helmet, chestPlate, leggings, boots, anvil);
     }
 
     @Override
