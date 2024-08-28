@@ -8,6 +8,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -154,6 +155,22 @@ public class GenericRole implements Role {
         }
 
         item.setItemMeta(itemMeta);
+    }
+
+    public ItemStack enchantBook(Enchantment enchantment, int level, ItemStack books) {
+        // Create an ItemStack of type ENCHANTED_BOOK
+        ItemStack enchantedBook = books;
+
+        // Get the meta of the enchanted book
+        EnchantmentStorageMeta bookMeta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
+        
+        // Add the enchantment to the book
+        if (bookMeta != null) {
+            bookMeta.addStoredEnchant(enchantment, level, true);
+            enchantedBook.setItemMeta(bookMeta);
+        }
+        
+        return enchantedBook;
     }
 
     public void addEffects() {

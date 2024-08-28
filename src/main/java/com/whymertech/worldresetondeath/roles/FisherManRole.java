@@ -123,22 +123,22 @@ public class FisherManRole extends GenericRole implements Listener {
                     newItem = new ItemStack(Material.GUNPOWDER, random.nextInt(32) + 1);
                 } else if (chance == 990) {
                     newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(16) + 1);
-                    super.enchantItem(Enchantment.FEATHER_FALLING, 255, newItem);
+                    super.enchantBook(Enchantment.FEATHER_FALLING, 255, newItem);
                 } else if (chance == 991) {
                     newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(4) + 1);
-                    super.enchantItem(Enchantment.SHARPNESS, 7, newItem);
-                    super.enchantItem(Enchantment.LOOTING, 5, newItem);
+                    super.enchantBook(Enchantment.SHARPNESS, 7, newItem);
+                    super.enchantBook(Enchantment.LOOTING, 5, newItem);
                 } else if (chance == 992) {
                     newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(4) + 1);
-                    super.enchantItem(Enchantment.INFINITY, 1, newItem);
-                    super.enchantItem(Enchantment.POWER, 7, newItem);
+                    super.enchantBook(Enchantment.INFINITY, 1, newItem);
+                    super.enchantBook(Enchantment.POWER, 7, newItem);
                 } else if (chance == 993) {
                     newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(4) + 1);
-                    super.enchantItem(Enchantment.EFFICIENCY, 7, newItem);
-                    super.enchantItem(Enchantment.FORTUNE, 5, newItem);
+                    super.enchantBook(Enchantment.EFFICIENCY, 7, newItem);
+                    super.enchantBook(Enchantment.FORTUNE, 5, newItem);
                 } else if (chance == 994) {
                     newItem = new ItemStack(Material.ENCHANTED_BOOK, random.nextInt(32) + 1);
-                    super.enchantItem(Enchantment.MENDING, 1, newItem);
+                    super.enchantBook(Enchantment.MENDING, 1, newItem);
                 } else if (chance == 995) {
                     newItem = new ItemStack(Material.SKELETON_SPAWN_EGG);
                 } else if (chance == 996) {
