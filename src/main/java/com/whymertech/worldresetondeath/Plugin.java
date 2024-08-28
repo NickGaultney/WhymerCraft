@@ -20,10 +20,12 @@ import com.whymertech.worldresetondeath.listeners.LobbyItemListener;
 import com.whymertech.worldresetondeath.listeners.MobDamageListener;
 import com.whymertech.worldresetondeath.tabCompleters.ResetPlayerTabCompleter;
 import com.whymertech.worldresetondeath.tabCompleters.RoleTabCompleter;
+import com.whymertech.worldresetondeath.roles.ArcherRole;
 import com.whymertech.worldresetondeath.roles.BlackSmithRole;
 import com.whymertech.worldresetondeath.roles.FarmerRole;
 import com.whymertech.worldresetondeath.roles.FisherManRole;
 import com.whymertech.worldresetondeath.roles.MinerRole;
+import com.whymertech.worldresetondeath.roles.RogueRole;
 import com.whymertech.worldresetondeath.roles.UndeadRole;
 
 import org.bukkit.event.Listener;
@@ -75,7 +77,9 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new FisherManRole(gameManager), this); 
         getServer().getPluginManager().registerEvents(new FarmerRole(gameManager), this);
         getServer().getPluginManager().registerEvents(new MinerRole(gameManager), this);
-        getServer().getPluginManager().registerEvents(new BlackSmithRole(gameManager), this);        
+        getServer().getPluginManager().registerEvents(new BlackSmithRole(gameManager), this); 
+        getServer().getPluginManager().registerEvents(new ArcherRole(gameManager), this); 
+        getServer().getPluginManager().registerEvents(new RogueRole(gameManager), this);        
         
         getCommand("kys").setExecutor(new KysCommand(this, gameManager)); // Registering the kys command
         getCommand("join").setExecutor(new JoinCommand(this, gameManager)); // Registering the join command
