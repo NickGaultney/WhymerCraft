@@ -165,7 +165,7 @@ public class MinerRole extends GenericRole implements Listener {
 
     @Override
     public Material favoriteFood() {
-        return Material.MELON;
+        return Material.MELON_SLICE;
     }
 
     @EventHandler
