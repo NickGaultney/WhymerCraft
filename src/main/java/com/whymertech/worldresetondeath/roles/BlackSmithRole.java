@@ -93,17 +93,17 @@ public class BlackSmithRole extends GenericRole implements Listener{
         ItemStack mace = new ItemStack(Material.MACE);
         ItemStack smithing = new ItemStack(Material.SMITHING_TABLE);
 
-        helmet.addEnchantment(Enchantment.FIRE_PROTECTION, 4);
-        helmet.addEnchantment(Enchantment.UNBREAKING, 255);
+        super.enchantItem(Enchantment.FIRE_PROTECTION, 5, helmet);
+        super.enchantItem(Enchantment.UNBREAKING, 255, helmet);
 
-        chestPlate.addEnchantment(Enchantment.FIRE_PROTECTION, 4);
-        chestPlate.addEnchantment(Enchantment.UNBREAKING, 255);
+        super.enchantItem(Enchantment.FIRE_PROTECTION, 5, chestPlate);
+        super.enchantItem(Enchantment.UNBREAKING, 255, chestPlate);
 
-        leggings.addEnchantment(Enchantment.FIRE_PROTECTION, 4);
-        leggings.addEnchantment(Enchantment.UNBREAKING, 255);
+        super.enchantItem(Enchantment.FIRE_PROTECTION, 5, leggings);
+        super.enchantItem(Enchantment.UNBREAKING, 255, leggings);
 
-        boots.addEnchantment(Enchantment.FIRE_PROTECTION, 4);
-        boots.addEnchantment(Enchantment.UNBREAKING, 255);
+        super.enchantItem(Enchantment.FIRE_PROTECTION, 5, boots);
+        super.enchantItem(Enchantment.UNBREAKING, 255, boots);
 
         giveBasePickaxe();
         giveBaseAxe();
