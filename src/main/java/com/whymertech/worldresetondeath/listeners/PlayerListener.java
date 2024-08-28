@@ -44,25 +44,4 @@ public class PlayerListener implements Listener {
             }
         }
     }
-
-    @EventHandler
-    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player player = (Player) event.getDamager();
-            ItemStack item = player.getInventory().getItemInMainHand();
-
-            // Check if the player has the "blacksmith" role
-            Role playerRole = gameManager.getRole(player);
-            if (playerRole != null && playerRole instanceof BlackSmithRole) {
-                // Check if the item is a sword
-                if (item != null && item.getType().toString().endsWith("_SWORD")) {
-                    // Cancel the event to prevent the sword attack
-                    event.setCancelled(true);
-                    player.sendMessage("The nimble sword fumbles in your beefy grip");
-                }
-            }
-        }
-    }
-
-
 }

@@ -6,6 +6,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.inventory.AnvilInventory;
@@ -199,6 +200,25 @@ public class BlackSmithRole extends GenericRole implements Listener{
     
         return upgradedItem;
     
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player) {
+            Player player = (Player) event.getDamager();
+            ItemStack item = player.getInventory().getItemInMainHand();
+
+            // Check if the player has the "blacksmith" role
+            Role playerRole = gameManager.getRole(player);
+            if (playerRole != null && playerRole instanceof BlackSmithRole) {
+                // Check if the item is a sword
+                if (item != null && item.getType().toString().endsWith("_SWORD")) {
+                    // Cancel the event to prevent the sword attack
+                    event.setCancelled(true);
+                    player.sendMessage("The nimble sword fumbles in your beefy grip");
+                }
+            }
+        }
     }
     
 }

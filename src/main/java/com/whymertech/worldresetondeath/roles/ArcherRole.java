@@ -63,7 +63,7 @@ public class ArcherRole extends GenericRole implements Listener{
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 
-        super.enchantItem(Enchantment.INFINITY, 8, bow);
+        super.enchantItem(Enchantment.INFINITY, 1, bow);
         super.enchantItem(Enchantment.POWER, 5, bow);
         super.enchantItem(Enchantment.UNBREAKING, 255, bow);
         super.enchantItem(Enchantment.MENDING, 1, bow);
@@ -106,6 +106,8 @@ public class ArcherRole extends GenericRole implements Listener{
             if (playerRole == null || !(playerRole instanceof ArcherRole)) return;
 
             // Scale the damage
+            double newDmg = event.getDamage() * gameManager.mobMultiplier;
+            player.sendMessage("Damage: " + newDmg);
             event.setDamage(event.getDamage() * gameManager.mobMultiplier);
 
         }

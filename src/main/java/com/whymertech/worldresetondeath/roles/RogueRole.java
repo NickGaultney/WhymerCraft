@@ -124,15 +124,17 @@ public class RogueRole extends GenericRole implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        // Check if the damager is a player
-        if (!(event.getDamager() instanceof Player)) return;
-        
-        Player player = (Player) event.getDamager();
-        Role playerRole = gameManager.getRole(player);
+        if (event.getDamager() instanceof Player) {
+            Player player = (Player) event.getDamager();
 
-        if (playerRole == null || !(playerRole instanceof RogueRole)) return;
-
-        // Scale the damage
-        event.setDamage(event.getDamage() * gameManager.mobMultiplier);
+            // Check if the player has the "rogue" role
+            Role playerRole = gameManager.getRole(player);
+            if (playerRole != null && playerRole instanceof RogueRole) {
+                // Check if the item is a sword
+                double newDmg = event.getDamage() * gameManager.mobMultiplier;
+                player.sendMessage("Damage: " + newDmg);
+                event.setDamage(event.getDamage() * gameManager.mobMultiplier);
+            }
+        }
     }
 }
