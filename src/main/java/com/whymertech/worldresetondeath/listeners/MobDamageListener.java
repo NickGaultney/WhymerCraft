@@ -29,6 +29,8 @@ public class MobDamageListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (gameManager.mobMultiplier == 1.0) return;
+        
         if (event.getDamager() instanceof Enemy) {
             event.setDamage(event.getDamage() * gameManager.mobMultiplier);
         }
