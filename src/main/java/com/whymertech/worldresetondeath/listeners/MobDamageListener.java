@@ -1,7 +1,8 @@
 package com.whymertech.worldresetondeath.listeners;
 
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Enemy;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -18,10 +19,10 @@ public class MobDamageListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Arrow) {
+        if (event.getDamager() instanceof Projectile) {
             Arrow arrow = (Arrow) event.getDamager();
-            if (arrow.getShooter() instanceof Skeleton) {
-                // Increase arrow damage by 25%
+            if (arrow.getShooter() instanceof Enemy) {
+                // Increase arrow damage by multiplier amount
                 event.setDamage(event.getDamage() * gameManager.mobMultiplier);
             }
         }

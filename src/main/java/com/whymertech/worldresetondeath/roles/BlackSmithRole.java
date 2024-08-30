@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -220,5 +221,21 @@ public class BlackSmithRole extends GenericRole implements Listener{
             }
         }
     }
-    
+
+    @EventHandler
+    public void onPlayerUseItem(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        ItemStack item = player.getInventory().getItemInMainHand();
+
+        // Check if the player has the "blacksmith" role
+        Role playerRole = gameManager.getRole(player);
+        if (playerRole != null && playerRole instanceof BlackSmithRole) {
+            // Check if the item is a sword
+            if (item != null && item.getType().toString().endsWith("_SWORD")) {
+                // Cancel the event to prevent the use of the sword
+                event.setCancelled(true);
+                player.sendMessage("Blacksmiths can't use swords...better try something else.");
+            }
+        }
+    }   
 }
