@@ -41,6 +41,11 @@ public class DeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         World world = Bukkit.getWorld(GameManager.WORLD_NAME);
+        
+        World lobbyWorld = Bukkit.getWorld(GameManager.LOBBY_WORLD_NAME);
+        World playerWorld = player.getWorld();
+
+        if (playerWorld == lobbyWorld) return;  
 
         if (!deadPlayers.isEmpty()) {
             event.setDeathMessage(player.getName() + " you're dead...and so is everyone else.");
@@ -64,7 +69,6 @@ public class DeathListener implements Listener {
         // Spawn a zombie at world spawn with player's name
         Location spawnLocation = world.getSpawnLocation();
         Chunk chunk = spawnLocation.getChunk();
-        player.teleport(spawnLocation);
 
         // Load the chunk and keep it loaded
         chunk.load(true);

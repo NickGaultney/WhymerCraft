@@ -58,9 +58,9 @@ public class MobDamageListener implements Listener {
 
                 if (gameManager.mobMultiplier <= 4.0) {
                     double tickReduction = ((gameManager.mobMultiplier / 0.25) - 4) * 2;    // This should come out to 2 ticks less per death. Creepers normally have 30 ticks
-                    creeper.setFuseTicks( (int) (creeper.getFuseTicks() - tickReduction));
+                    creeper.setMaxFuseTicks( (int) (creeper.getMaxFuseTicks() - tickReduction));
                 } else {
-                    creeper.setFuseTicks((creeper.getFuseTicks() - 24));
+                    creeper.setMaxFuseTicks((creeper.getMaxFuseTicks() - 24));
                 }
 
                 if (gameManager.mobMultiplier >= 3.0) {
