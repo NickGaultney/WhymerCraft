@@ -187,6 +187,7 @@ public class FarmerRole extends GenericRole implements Listener {
         switch (key.getKey()) {
             case "speed":
             case "fast_digging": // Haste
+            case "haste":
             case "strength": // Strength
             case "jump":
             case "damage_resistance":
