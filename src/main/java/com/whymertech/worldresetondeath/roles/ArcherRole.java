@@ -67,6 +67,7 @@ public class ArcherRole extends GenericRole implements Listener{
         super.enchantItem(Enchantment.POWER, 5, bow);
         super.enchantItem(Enchantment.UNBREAKING, 255, bow);
         super.enchantItem(Enchantment.MENDING, 1, bow);
+        super.enchantItem(Enchantment.FLAME, 1, bow);
 
         super.enchantItem(Enchantment.FEATHER_FALLING, 8, boots);
         super.enchantItem(Enchantment.UNBREAKING, 255, boots);
