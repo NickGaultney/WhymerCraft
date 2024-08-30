@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.*;
 
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -64,6 +65,8 @@ public class SeedManager {
         }
 
         Random random = new Random();
+        Collections.shuffle(seedList);
+        
         String randomSeed = seedList.get(random.nextInt(seedList.size()));
         
         return Long.parseLong(randomSeed);
