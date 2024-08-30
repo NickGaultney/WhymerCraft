@@ -65,11 +65,12 @@ public class RogueRole extends GenericRole implements Listener {
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 
+        super.enchantItem(Enchantment.LOOTING, 5, rogueSword);
+        super.enchantItem(Enchantment.MENDING, 1, rogueSword);
+        super.enchantItem(Enchantment.UNBREAKING, 255, rogueSword);
+
         ItemMeta rogueSwordMeta = rogueSword.getItemMeta();
         if (rogueSwordMeta != null) {
-            rogueSwordMeta.addEnchant(Enchantment.MENDING, 1, true);
-            rogueSwordMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
-
             // Use PersistentDataContainer to store custom attributes
             NamespacedKey attackDamageKey = new NamespacedKey("worldresetondeath", "custom_attack_damage");
             NamespacedKey attackSpeedKey = new NamespacedKey("worldresetondeath", "custom_attack_speed");
