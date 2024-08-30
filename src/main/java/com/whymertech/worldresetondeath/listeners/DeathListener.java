@@ -24,7 +24,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.whymertech.worldresetondeath.GameManager;
@@ -34,7 +33,6 @@ import com.whymertech.worldresetondeath.roles.Role;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-//import java.util.Set;
 import java.util.UUID;
 
 public class DeathListener implements Listener {
@@ -63,7 +61,7 @@ public class DeathListener implements Listener {
         deadPlayers.add(player.getUniqueId());
 
         // Prevent the normal death process
-        event.setDeathMessage(player.getName() + " has fallen, but their spirit lingers...");
+        //event.setDeathMessage(player.getName() + " has fallen, but their spirit lingers...");
 
         // Set player to spectator mode
         player.setGameMode(GameMode.SPECTATOR);
@@ -75,6 +73,7 @@ public class DeathListener implements Listener {
         // Spawn a zombie at world spawn with player's name
         Location spawnLocation = world.getSpawnLocation();
         Chunk chunk = spawnLocation.getChunk();
+        player.teleport(spawnLocation);
 
         // Load the chunk and keep it loaded
         chunk.load(true);
