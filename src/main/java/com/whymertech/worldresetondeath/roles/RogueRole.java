@@ -131,9 +131,6 @@ public class RogueRole extends GenericRole implements Listener {
             // Check if the player has the "rogue" role
             Role playerRole = gameManager.getRole(player);
             if (playerRole != null && playerRole instanceof RogueRole) {
-                // Check if the item is a sword
-                double newDmg = event.getDamage() * gameManager.mobMultiplier;
-                player.sendMessage("Damage: " + newDmg);
                 event.setDamage(event.getDamage() * gameManager.mobMultiplier);
             }
         }
