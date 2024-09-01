@@ -113,9 +113,6 @@ public class GenericRole implements Role {
     }
 
     public void addSpeedEffect(int speedModifier) {
-        // Duration is in ticks (20 ticks = 1 second), so this is 1 hour
-        int duration = Integer.MAX_VALUE; // Practically infinite duration
-
         // Apply Speed I effect
         PotionEffect speedEffect = new PotionEffect(PotionEffectType.SPEED, PotionEffect.INFINITE_DURATION, speedModifier, false, false);
         player.addPotionEffect(speedEffect);
