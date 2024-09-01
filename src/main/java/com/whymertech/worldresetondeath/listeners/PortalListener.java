@@ -76,9 +76,9 @@ public class PortalListener implements Listener {
 
     @EventHandler
     public void onEntityPortal(EntityPortalEvent event) {
-        String worldName = GameManager.WORLD_NAME;
-        String netherWorldName = GameManager.WORLD_NAME + "_nether";
-        String endWorldName = GameManager.WORLD_NAME + "_the_end";
+        // String worldName = GameManager.WORLD_NAME;
+        // String netherWorldName = GameManager.WORLD_NAME + "_nether";
+        // String endWorldName = GameManager.WORLD_NAME + "_the_end";
 
         Location from = event.getFrom();
         Location to = event.getTo();
