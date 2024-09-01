@@ -4,8 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Cow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
@@ -13,10 +16,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.joml.Random;
 
 import com.whymertech.worldresetondeath.GameManager;
 import com.whymertech.worldresetondeath.Plugin;
@@ -77,7 +82,7 @@ public class DeathListener implements Listener {
                 player.teleport(spawnLocation);
             }
         }.runTaskLater(plugin, 10L); // Delay to give time for death event to be fully processed
-        
+
         // Load the chunk and keep it loaded
         chunk.load(true);
         
@@ -140,6 +145,13 @@ public class DeathListener implements Listener {
                         gameOver(player);
                     }
                 }
+            }
+        } else if (event.getEntity() instanceof Animals) {
+            Random random = new Random();
+            int chance = random.nextInt(10);
+
+            if (chance <= 2) {
+                event.getDrops().add(new ItemStack(Material.BONE, (chance+1)));
             }
         }
     }
