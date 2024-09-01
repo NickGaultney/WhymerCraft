@@ -1,21 +1,14 @@
 package com.whymertech.worldresetondeath.listeners;
 
-import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enemy;
-import org.bukkit.entity.Ghast;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.EquipmentSlotGroup;
 
 import com.whymertech.worldresetondeath.GameManager;
 
