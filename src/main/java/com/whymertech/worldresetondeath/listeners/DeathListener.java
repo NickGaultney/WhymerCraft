@@ -16,6 +16,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.whymertech.worldresetondeath.GameManager;
 import com.whymertech.worldresetondeath.Plugin;
@@ -70,6 +71,13 @@ public class DeathListener implements Listener {
         Location spawnLocation = world.getSpawnLocation();
         Chunk chunk = spawnLocation.getChunk();
 
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                player.teleport(spawnLocation);
+            }
+        }.runTaskLater(plugin, 10L); // Delay to give time for death event to be fully processed
+        
         // Load the chunk and keep it loaded
         chunk.load(true);
         
