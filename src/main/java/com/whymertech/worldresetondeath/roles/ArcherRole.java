@@ -107,8 +107,6 @@ public class ArcherRole extends GenericRole implements Listener{
             if (playerRole == null || !(playerRole instanceof ArcherRole)) return;
 
             // Scale the damage
-            double newDmg = event.getDamage() * gameManager.mobMultiplier;
-            player.sendMessage("Damage: " + newDmg);
             event.setDamage(event.getDamage() * gameManager.mobMultiplier);
 
         }
