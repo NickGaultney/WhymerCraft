@@ -56,7 +56,7 @@ public class MobDamageListener implements Listener {
                     creeper.setMaxFuseTicks((creeper.getMaxFuseTicks() - 24));
                 }
 
-                if (gameManager.mobMultiplier >= 3.0) {
+                if (gameManager.mobMultiplier >= 4.5) {
                     creeper.setPowered(true);
                 }
 
