@@ -81,7 +81,7 @@ public class SeedManager {
         plugin.getLogger().info("Name:" + worldName);
         WorldType result = null;
         for (WorldType type : WorldType.values()) {
-            if (worldName.toLowerCase().contains(type.name().toLowerCase())) {
+            if (worldName.split(":")[0].equalsIgnoreCase(type.name())) {
                 result = type;
             }
         }
