@@ -9,6 +9,8 @@ import java.util.Random;
 import java.util.*;
 
 
+import org.bukkit.WorldType;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class SeedManager {
@@ -16,6 +18,7 @@ public class SeedManager {
     private File seedFile;
     private Plugin plugin;
     public String currentSeed;
+    private WorldType seedWorldType;
 
     public SeedManager(Plugin plugin) {
         this.plugin = plugin;
@@ -54,10 +57,15 @@ public class SeedManager {
         return currentSeed;
     }
 
+    public WorldType getSeedWorldType() {
+        return seedWorldType;
+    }
+
     public Long getRandomSeedFromList() {
         YamlConfiguration seedConfig = YamlConfiguration.loadConfiguration(seedFile);
 
-        Set<String> seeds = seedConfig.getConfigurationSection("seeds").getKeys(false);
+        ConfigurationSection seedYaml = seedConfig.getConfigurationSection("seeds");
+        Set<String> seeds = seedYaml.getKeys(false);
         List<String> seedList = new ArrayList<>(seeds);
 
         if (seedList.isEmpty()) {
@@ -68,7 +76,19 @@ public class SeedManager {
         Collections.shuffle(seedList);
         
         String randomSeed = seedList.get(random.nextInt(seedList.size()));
-        
+        String worldName = seedYaml.getString(randomSeed + ".name");
+        plugin.getLogger().info("Seed:" + randomSeed);
+        plugin.getLogger().info("Name:" + worldName);
+        WorldType result = null;
+        for (WorldType type : WorldType.values()) {
+            if (worldName.toLowerCase().contains(type.name().toLowerCase())) {
+                result = type;
+            }
+        }
+        if (result == null) {
+            result = WorldType.NORMAL;
+        }
+        seedWorldType = result;
         return Long.parseLong(randomSeed);
     }
 
