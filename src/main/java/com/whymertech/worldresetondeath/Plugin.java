@@ -66,7 +66,10 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new FisherManRole(gameManager), this); 
         getServer().getPluginManager().registerEvents(new FarmerRole(gameManager), this);
         getServer().getPluginManager().registerEvents(new MinerRole(gameManager), this);
-        
+        getServer().getPluginManager().registerEvents(new BlackSmithRole(gameManager), this);
+        getServer().getPluginManager().registerEvents(new ArcherRole(gameManager), this);
+        getServer().getPluginManager().registerEvents(new RogueRole(gameManager), this);
+
         getCommand("kys").setExecutor(new KysCommand(this, gameManager)); // Registering the kys command
         getCommand("join").setExecutor(new JoinCommand(this, gameManager)); // Registering the join command
         getCommand("lobby").setExecutor(new LobbyCommand(this, gameManager)); // Registering the lobby command
