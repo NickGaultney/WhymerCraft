@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.whymertech.worldresetondeath.GameManager;
@@ -121,11 +120,6 @@ public class TheHatRole extends GenericRole implements Listener {
     @Override
     public Material favoriteFood() {
         return Material.CHORUS_FRUIT;
-    }
-
-    @EventHandler
-    public void onPlayerConsume(PlayerItemConsumeEvent event) {
-        plugin.getLogger().info("Consumed: " + event.getItem().getType().name());
     }
 
     @EventHandler
