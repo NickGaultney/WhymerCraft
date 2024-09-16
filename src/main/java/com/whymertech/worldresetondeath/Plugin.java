@@ -1,6 +1,7 @@
 package com.whymertech.worldresetondeath;
 
 import com.whymertech.worldresetondeath.listeners.*;
+import com.whymertech.worldresetondeath.recipes.BlackSmithRecipes;
 import com.whymertech.worldresetondeath.roles.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
