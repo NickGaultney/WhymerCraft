@@ -5,11 +5,7 @@ import org.bukkit.World;
 import org.bukkit.block.structure.Mirror;
 import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.whymertech.worldresetondeath.GameManager;
@@ -17,8 +13,6 @@ import com.whymertech.worldresetondeath.Plugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.inventory.MainHand;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.structure.Structure;
 
 import java.io.File;
@@ -28,7 +22,7 @@ import java.util.Random;
 import static com.whymertech.worldresetondeath.Utils.plugin;
 import static com.whymertech.worldresetondeath.Utils.randInt;
 
-public class TheHatRole extends GenericRole implements Listener {
+public class TheHatRole extends GenericRole {
 
     public double health = 20.0;
     public Location spawn;
@@ -36,7 +30,6 @@ public class TheHatRole extends GenericRole implements Listener {
     private static final double yOffset = 4;
     private static final double zOffset = 3.5;
 
-    public TheHatRole(GameManager gameManager) { super(gameManager); }
     public TheHatRole(Player player) {
         super(player);
     }
@@ -121,59 +114,4 @@ public class TheHatRole extends GenericRole implements Listener {
     public Material favoriteFood() {
         return Material.CHORUS_FRUIT;
     }
-
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
-//        Player player = event.getPlayer();
-//        Role playerRole = gameManager.getRole(player);
-//
-//        if (playerRole instanceof TheHatRole) {
-//            if (event.hasItem()) {
-//                ItemStack item = event.getItem();
-//                if (item.getType() == Material.FIREWORK_ROCKET){
-//                    event.setCancelled(true);
-//                } else {
-//                    player.sendMessage(item.getType().name());
-//                }
-//
-//            }
-//            else {
-//                player.setFlySpeed(1);
-//            }
-//
-//        }
-    }
-
-//    @EventHandler
-//    public void onFireworkSpawn(EntitySpawnEvent event) {
-//        Entity entity = event.getEntity();
-//        if (entity instanceof Firework firework) {
-//            LivingEntity person = firework.getAttachedTo();
-//            plugin.getLogger().info("Check2");
-//            if (person instanceof Player player) {
-//                PlayerInventory items = player.getInventory();
-//                plugin.getLogger().info("Check3");
-//                ItemStack rocket = new ItemStack(Material.FIREWORK_ROCKET);
-//                rocket.setAmount(1);
-//                items.addItem(rocket);
-//                if (items.getItemInMainHand().getType() == Material.AIR) {
-//                    plugin.getLogger().info("Mainhand");
-//                    ItemStack mainHand = items.getItemInMainHand();
-//                    mainHand.setType(Material.FIREWORK_ROCKET);
-//                    mainHand.setAmount(1);
-//                } else if (items.getItemInOffHand().getType() == Material.AIR) {
-//                    plugin.getLogger().info("Offhand");
-//                    ItemStack offHand = items.getItemInOffHand();
-//                    offHand.setType(Material.FIREWORK_ROCKET);
-//                    offHand.setAmount(2);
-//                } else {
-//                    plugin.getLogger().info("Other");
-////                    ItemStack rocket = new ItemStack(Material.FIREWORK_ROCKET);
-////                    rocket.setAmount(1);
-////                    items.addItem(rocket);
-//                }
-//            }
-//        }
-//    }
-
 }
