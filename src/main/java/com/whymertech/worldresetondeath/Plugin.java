@@ -65,8 +65,10 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new FisherManRole(gameManager), this); 
         getServer().getPluginManager().registerEvents(new FarmerRole(gameManager), this);
         getServer().getPluginManager().registerEvents(new MinerRole(gameManager), this);
-        getServer().getPluginManager().registerEvents(new TheHatRole(gameManager), this);
-        
+        getServer().getPluginManager().registerEvents(new BlackSmithRole(gameManager), this);
+        getServer().getPluginManager().registerEvents(new ArcherRole(gameManager), this);
+        getServer().getPluginManager().registerEvents(new RogueRole(gameManager), this);
+
         getCommand("kys").setExecutor(new KysCommand(this, gameManager)); // Registering the kys command
         getCommand("join").setExecutor(new JoinCommand(this, gameManager)); // Registering the join command
         getCommand("lobby").setExecutor(new LobbyCommand(this, gameManager)); // Registering the lobby command
@@ -77,6 +79,8 @@ public class Plugin extends JavaPlugin implements Listener
         getCommand("givelobbyitem").setExecutor(new GiveLobbyItemCommand());   // Registering the addseed command
         getCommand("resetplayer").setExecutor(new ResetPlayerCommand(this, gameManager));   // Registering the addseed command
         getCommand("resetplayer").setTabCompleter(new ResetPlayerTabCompleter());
+
+        new BlackSmithRecipes(this);
 
         getLogger().info("WorldResetOnDeath plugin has been enabled!");
     }

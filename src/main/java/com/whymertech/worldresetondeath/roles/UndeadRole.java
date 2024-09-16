@@ -2,9 +2,9 @@ package com.whymertech.worldresetondeath.roles;
 
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
-import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -80,7 +80,7 @@ public class UndeadRole extends GenericRole implements Listener {
             if (playerRole != null && playerRole instanceof UndeadRole) {
                 if (event.getEntity().hasMetadata("attackUndead")) return;
 
-                if (event.getEntity() instanceof Monster) {
+                if (event.getEntity() instanceof Enemy) {
                     event.setCancelled(true);
                 }
             }

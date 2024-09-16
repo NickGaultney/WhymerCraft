@@ -25,14 +25,18 @@ public class LobbyCommand implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("lobby")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-
-                if (gameManager.worldExists(GameManager.LOBBY_WORLD_NAME)) { // Check if the world exists
-                    sender.sendMessage("Joining Lobby...");
-                    plugin.getLogger().info(sender.getName() + " executed /join command");
-                    teleportPlayerToLobby(player);
+                if (player.isOp()) { // Check if the player is an operator
+                    if (gameManager.worldExists(GameManager.LOBBY_WORLD_NAME)) { // Check if the world exists
+                        sender.sendMessage("Joining Lobby...");
+                        plugin.getLogger().info(sender.getName() + " executed /lobby command");
+                        teleportPlayerToLobby(player);
+                    } else {
+                        player.sendMessage("Couldn't find the lobby");
+                        plugin.getLogger().info("Failed lobby command attempt by: " + player.getName());
+                    }
                 } else {
-                    player.sendMessage("Couldn't find the lobby");
-                    plugin.getLogger().info("Failed lobby command attempt by: " + player.getName());
+                    player.sendMessage("You do not have permission to use this command.");
+                    plugin.getLogger().info("Unauthorized /lobby command attempt by: " + player.getName());
                 }
             }
             return true;

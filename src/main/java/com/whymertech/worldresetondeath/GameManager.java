@@ -133,6 +133,9 @@ public class GameManager {
         } else {
             player.teleport(Bukkit.getWorld(WORLD_NAME).getSpawnLocation());
         }
+
+        //FIXME: This doesn't work
+        player.setRespawnLocation(Bukkit.getWorld(WORLD_NAME).getSpawnLocation());
     }
 
     public void resetPlayer(Player player) {

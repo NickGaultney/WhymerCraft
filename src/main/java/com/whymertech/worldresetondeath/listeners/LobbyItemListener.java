@@ -156,7 +156,7 @@ public class LobbyItemListener implements Listener {
                 player.performCommand("role enchanter");
                 player.performCommand("join");
                 break;
-            case PUMPKIN:
+            case ELYTRA:
                 player.performCommand("role thehat");
                 player.performCommand("join");
                 break;
@@ -219,7 +219,7 @@ public class LobbyItemListener implements Listener {
                 player.performCommand("role enchanter");
                 player.performCommand("join");
                 break;
-            case PUMPKIN:
+            case ELYTRA:
                 player.performCommand("role thehat");
                 player.performCommand("join");
                 break;
