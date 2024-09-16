@@ -1,5 +1,6 @@
 package com.whymertech.worldresetondeath;
 
+import com.whymertech.worldresetondeath.listeners.*;
 import com.whymertech.worldresetondeath.roles.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -10,14 +11,6 @@ import com.whymertech.worldresetondeath.commands.ResetPlayerCommand;
 import com.whymertech.worldresetondeath.commands.RoleCommand;
 import com.whymertech.worldresetondeath.commands.AddSeedCommand;
 import com.whymertech.worldresetondeath.commands.GiveLobbyItemCommand;
-import com.whymertech.worldresetondeath.listeners.AnvilListener;
-import com.whymertech.worldresetondeath.listeners.DeathListener;
-import com.whymertech.worldresetondeath.listeners.PortalListener;
-import com.whymertech.worldresetondeath.listeners.PlayerListener;
-import com.whymertech.worldresetondeath.listeners.DoubleJumpListener;
-import com.whymertech.worldresetondeath.listeners.EnchantmentListener;
-import com.whymertech.worldresetondeath.listeners.LobbyItemListener;
-import com.whymertech.worldresetondeath.listeners.MobDamageListener;
 import com.whymertech.worldresetondeath.tabCompleters.ResetPlayerTabCompleter;
 import com.whymertech.worldresetondeath.tabCompleters.RoleTabCompleter;
 
@@ -40,6 +33,7 @@ public class Plugin extends JavaPlugin implements Listener
     //public static final long RECREATE_DELAY = 100L; // 1 second delay
     //public static final long SEED = -950547527103331411L;
     private File deathLogFile;
+    public static final String PLUGIN_NAMESPACE = "worldresetondeath";
 
     private GameManager gameManager;
     private SeedManager seedManager;
@@ -64,6 +58,7 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new EnchantmentListener(gameManager), this);
         getServer().getPluginManager().registerEvents(new LobbyItemListener(), this);
         getServer().getPluginManager().registerEvents(new MobDamageListener(gameManager), this);
+        getServer().getPluginManager().registerEvents(new CraftingListener(this), this);
 
         getServer().getPluginManager().registerEvents(objectiveManager, this);
         getServer().getPluginManager().registerEvents(new UndeadRole(gameManager), this);      
