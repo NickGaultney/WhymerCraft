@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
@@ -28,6 +29,7 @@ import com.whymertech.worldresetondeath.roles.Role;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 public class GameManager {
 
@@ -44,6 +46,7 @@ public class GameManager {
     private SeedManager seedManager;
     private ObjectiveManager objectiveManager;
     public double mobMultiplier = 1.0;
+    private HashSet<UUID> deadPlayers = new HashSet<>();
     public Material objectiveMaterial;
 
     private Plugin plugin;
@@ -520,5 +523,13 @@ public class GameManager {
 
     private void loadObjective() {
         objectiveManager.giveObjectiveBook();
+    }
+
+    public int getGameNumber() { return gameNumber; }
+
+    public HashSet<UUID> getDeadPlayers() { return deadPlayers; }
+
+    public boolean zombieExists() {
+        return !deadPlayers.isEmpty();
     }
 }

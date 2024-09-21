@@ -36,11 +36,12 @@ public class DeathListener implements Listener {
 
     private final Plugin plugin;
     private GameManager gameManager;
-    private HashSet<UUID> deadPlayers = new HashSet<>();
+    private final HashSet<UUID> deadPlayers;
 
     public DeathListener(Plugin plugin, GameManager gameManager) {
         this.plugin = plugin;
         this.gameManager = gameManager;
+        deadPlayers = gameManager.getDeadPlayers();
     }
 
     @EventHandler
@@ -169,7 +170,7 @@ public class DeathListener implements Listener {
     }
 
     private void gameOver(Player player) {
-        deadPlayers = new HashSet<>();
+        deadPlayers.clear();
         gameManager.resetPlayer(player);
         String playerName = player.getName();
         String playerUUID = player.getUniqueId().toString();
