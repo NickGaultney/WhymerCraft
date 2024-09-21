@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.MainHand;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.structure.Structure;
 
 import java.io.File;
@@ -36,6 +37,8 @@ public class TheHatRole extends GenericRole implements Listener {
     private static final double xOffset = 1.5;
     private static final double yOffset = 4;
     private static final double zOffset = 3.5;
+
+    private static final String ROCKET_NAME = "Infinite Rockets";
 
     public TheHatRole(GameManager gameManager) { super(gameManager); }
     public TheHatRole(Player player) {
@@ -111,6 +114,9 @@ public class TheHatRole extends GenericRole implements Listener {
         
         ItemStack elytra = new ItemStack(Material.ELYTRA);
         ItemStack rockets = new ItemStack(Material.FIREWORK_ROCKET, 64);
+        ItemMeta rocketMeta = rockets.getItemMeta();
+        rocketMeta.setItemName(ROCKET_NAME);
+        rockets.setItemMeta(rocketMeta);
 
         super.enchantItem(Enchantment.MENDING, 1, elytra);
         super.enchantItem(Enchantment.UNBREAKING, 255, elytra);
@@ -130,56 +136,20 @@ public class TheHatRole extends GenericRole implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-//        Player player = event.getPlayer();
-//        Role playerRole = gameManager.getRole(player);
-//
-//        if (playerRole instanceof TheHatRole) {
-//            if (event.hasItem()) {
-//                ItemStack item = event.getItem();
-//                if (item.getType() == Material.FIREWORK_ROCKET){
-//                    event.setCancelled(true);
-//                } else {
-//                    player.sendMessage(item.getType().name());
-//                }
-//
-//            }
-//            else {
-//                player.setFlySpeed(1);
-//            }
-//
-//        }
-    }
+        Player player = event.getPlayer();
+        Role playerRole = gameManager.getRole(player);
+        if (event.hasItem()) {
+            ItemStack item = event.getItem();
+            if (item.getType() == Material.FIREWORK_ROCKET && item.getItemMeta().getItemName().equals(ROCKET_NAME)){
+                if (playerRole instanceof TheHatRole) {
+                    item.setAmount(32);
+                }
+            }
 
-//    @EventHandler
-//    public void onFireworkSpawn(EntitySpawnEvent event) {
-//        Entity entity = event.getEntity();
-//        if (entity instanceof Firework firework) {
-//            LivingEntity person = firework.getAttachedTo();
-//            plugin.getLogger().info("Check2");
-//            if (person instanceof Player player) {
-//                PlayerInventory items = player.getInventory();
-//                plugin.getLogger().info("Check3");
-//                ItemStack rocket = new ItemStack(Material.FIREWORK_ROCKET);
-//                rocket.setAmount(1);
-//                items.addItem(rocket);
-//                if (items.getItemInMainHand().getType() == Material.AIR) {
-//                    plugin.getLogger().info("Mainhand");
-//                    ItemStack mainHand = items.getItemInMainHand();
-//                    mainHand.setType(Material.FIREWORK_ROCKET);
-//                    mainHand.setAmount(1);
-//                } else if (items.getItemInOffHand().getType() == Material.AIR) {
-//                    plugin.getLogger().info("Offhand");
-//                    ItemStack offHand = items.getItemInOffHand();
-//                    offHand.setType(Material.FIREWORK_ROCKET);
-//                    offHand.setAmount(2);
-//                } else {
-//                    plugin.getLogger().info("Other");
-////                    ItemStack rocket = new ItemStack(Material.FIREWORK_ROCKET);
-////                    rocket.setAmount(1);
-////                    items.addItem(rocket);
-//                }
-//            }
-//        }
-//    }
+        }
+        else {
+            player.setFlySpeed(1);
+        }
+    }
 
 }
