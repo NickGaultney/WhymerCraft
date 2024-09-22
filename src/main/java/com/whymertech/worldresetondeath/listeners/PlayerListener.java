@@ -3,12 +3,7 @@ package com.whymertech.worldresetondeath.listeners;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
-import com.whymertech.worldresetondeath.roles.Role;
-import com.whymertech.worldresetondeath.roles.BlackSmithRole;
 
 import com.whymertech.worldresetondeath.GameManager;
 
@@ -26,43 +21,26 @@ public class PlayerListener implements Listener {
         if (!gameManager.playerHasJoined(player)) {
             gameManager.resetPlayer(player);
         }
-    }
+        int gameNumber = gameManager.getGameNumber();
+        String objective = gameManager.objectiveMaterial.toString();
+        double mobMultiplier = gameManager.mobMultiplier;
 
-    @EventHandler
-    public void onPlayerUseItem(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = player.getInventory().getItemInMainHand();
-
-        // Check if the player has the "blacksmith" role
-        Role playerRole = gameManager.getRole(player);
-        if (playerRole != null && playerRole instanceof BlackSmithRole) {
-            // Check if the item is a sword
-            if (item != null && item.getType().toString().endsWith("_SWORD")) {
-                // Cancel the event to prevent the use of the sword
-                event.setCancelled(true);
-                player.sendMessage("Blacksmiths can't use swords...better try an axe.");
-            }
+        String currentZombie = "{\"text\":\"\\nEverybody is alive!\",\"color\":\"green\"}";
+        if (gameManager.zombieExists()) {
+            currentZombie = "{\"text\":\"\\nOne of your players counts among the dead...\",\"color\":\"red\"}";
         }
+
+        player.performCommand("tellraw @s [\"\"," +
+                    "{\"text\":\"--------- \",\"color\":\"yellow\"}," +
+                    "{\"text\":\"Welcome\",\"color\":\"white\"}," +
+                    "{\"text\":\" ----------------------------\",\"color\":\"yellow\"}," +
+                    "{\"text\":\"\\nWelcome to game \"}," +
+                    "{\"text\":\"" + gameNumber + "\",\"color\":\"yellow\"}," +
+                    "{\"text\":\"! The objective is: \"}," +
+                    "{\"text\":\"" + objective + "\",\"color\":\"blue\"}," +
+                    "{\"text\":\"\\nThe current mob multiplier is \"}," +
+                    "{\"text\":\"" + mobMultiplier + "\",\"color\":\"red\"}," +
+                    currentZombie +
+                "]");
     }
-
-    @EventHandler
-    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player player = (Player) event.getDamager();
-            ItemStack item = player.getInventory().getItemInMainHand();
-
-            // Check if the player has the "blacksmith" role
-            Role playerRole = gameManager.getRole(player);
-            if (playerRole != null && playerRole instanceof BlackSmithRole) {
-                // Check if the item is a sword
-                if (item != null && item.getType().toString().endsWith("_SWORD")) {
-                    // Cancel the event to prevent the sword attack
-                    event.setCancelled(true);
-                    player.sendMessage("The nimble sword fumbles in your beefy grip");
-                }
-            }
-        }
-    }
-
-
 }

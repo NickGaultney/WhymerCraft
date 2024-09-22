@@ -3,21 +3,25 @@ package com.whymertech.worldresetondeath.roles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.projectiles.ProjectileSource;
 
 import com.whymertech.worldresetondeath.GameManager;
 
-public class ArcherRole extends GenericRole{
+public class ArcherRole extends GenericRole implements Listener{
     public double health = 16.0;
-    public int speedLevel = 4;
+    public int speedLevel = 2;
+
+    public ArcherRole(GameManager gameManager) {
+        super(gameManager);
+    }
 
     public ArcherRole(Player player) {
         super(player);
@@ -59,31 +63,15 @@ public class ArcherRole extends GenericRole{
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 
-        ItemMeta bowMeta = bow.getItemMeta();
-        if (bowMeta != null) {
-            bowMeta.addEnchant(Enchantment.INFINITY, 1, true);
-            bowMeta.addEnchant(Enchantment.POWER, 5, true);
-            bowMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
-            bowMeta.addEnchant(Enchantment.MENDING, 1, true);
+        super.enchantItem(Enchantment.INFINITY, 1, bow);
+        super.enchantItem(Enchantment.POWER, 5, bow);
+        super.enchantItem(Enchantment.UNBREAKING, 255, bow);
+        super.enchantItem(Enchantment.MENDING, 1, bow);
+        super.enchantItem(Enchantment.FLAME, 1, bow);
 
-            // Use PersistentDataContainer to store custom attributes
-            NamespacedKey key = new NamespacedKey("worldresetondeath", "custom_attack_damage");
-            // Add custom attributes
-            AttributeModifier damageModifier = new AttributeModifier(
-                    key, 
-                    5.0, // Additional attack damage
-                    AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlotGroup.HAND
-            );
-            bowMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
-            
-            bow.setItemMeta(bowMeta);
-        }
-
-        ItemMeta bootsMeta = boots.getItemMeta();
-        bootsMeta.addEnchant(Enchantment.FEATHER_FALLING, 5, true);
-        bootsMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
-        boots.setItemMeta(bootsMeta);
+        super.enchantItem(Enchantment.FEATHER_FALLING, 8, boots);
+        super.enchantItem(Enchantment.UNBREAKING, 255, boots);
+        super.enchantItem(Enchantment.MENDING, 1, boots);
 
         giveBaseAxe();
         giveBasePickaxe();
@@ -103,5 +91,24 @@ public class ArcherRole extends GenericRole{
 
     public void addEffects() {
         super.addSpeedEffect(speedLevel);
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Arrow arrow) {
+            ProjectileSource shooter = arrow.getShooter();
+
+            // Check if the shooter is a player
+            if (!(shooter instanceof Player)) return;
+            
+            Player player = (Player) shooter;
+            Role playerRole = gameManager.getRole(player);
+
+            if (playerRole == null || !(playerRole instanceof ArcherRole)) return;
+
+            // Scale the damage
+            event.setDamage(event.getDamage() * gameManager.mobMultiplier);
+
+        }
     }
 }

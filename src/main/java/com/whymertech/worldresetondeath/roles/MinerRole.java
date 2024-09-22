@@ -138,9 +138,11 @@ public class MinerRole extends GenericRole implements Listener {
             diamondPickaxe.setItemMeta(pickaxeMeta);
         }
 
-        giveBaseAxe();
+        super.player.getInventory().addItem(diamondPickaxe);
         giveBaseShovel();
-        super.player.getInventory().addItem(diamondPickaxe, torches, LaFishO, bread, logs);
+        super.player.getInventory().addItem(new ItemStack(Material.AIR));
+        giveBaseAxe();
+        super.player.getInventory().addItem(LaFishO, bread, logs, torches);
     }
 
     public void addNightVision() {
@@ -165,7 +167,7 @@ public class MinerRole extends GenericRole implements Listener {
 
     @Override
     public Material favoriteFood() {
-        return Material.MELON;
+        return Material.MELON_SLICE;
     }
 
     @EventHandler

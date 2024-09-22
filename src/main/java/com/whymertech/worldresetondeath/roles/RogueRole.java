@@ -9,15 +9,22 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.whymertech.worldresetondeath.GameManager;
 
-public class RogueRole extends GenericRole {
+public class RogueRole extends GenericRole implements Listener {
     public double health = 14.0;
-    public int speedLevel = 4;
+    public int speedLevel = 2;
+
+    public RogueRole(GameManager gameManager) {
+        super(gameManager);
+    }
 
     public RogueRole(Player player) {
         super(player);
@@ -58,11 +65,12 @@ public class RogueRole extends GenericRole {
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 
+        super.enchantItem(Enchantment.LOOTING, 5, rogueSword);
+        super.enchantItem(Enchantment.MENDING, 1, rogueSword);
+        super.enchantItem(Enchantment.UNBREAKING, 255, rogueSword);
+
         ItemMeta rogueSwordMeta = rogueSword.getItemMeta();
         if (rogueSwordMeta != null) {
-            rogueSwordMeta.addEnchant(Enchantment.MENDING, 1, true);
-            rogueSwordMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
-
             // Use PersistentDataContainer to store custom attributes
             NamespacedKey attackDamageKey = new NamespacedKey("worldresetondeath", "custom_attack_damage");
             NamespacedKey attackSpeedKey = new NamespacedKey("worldresetondeath", "custom_attack_speed");
@@ -86,10 +94,14 @@ public class RogueRole extends GenericRole {
             rogueSword.setItemMeta(rogueSwordMeta);
         }
 
-        ItemMeta bootsMeta = boots.getItemMeta();
-        bootsMeta.addEnchant(Enchantment.FEATHER_FALLING, 8, true);
-        bootsMeta.addEnchant(Enchantment.UNBREAKING, 255, true);
-        boots.setItemMeta(bootsMeta);
+        super.enchantItem(Enchantment.SWIFT_SNEAK, 5, leggings);
+        super.enchantItem(Enchantment.UNBREAKING, 255, leggings);
+        super.enchantItem(Enchantment.MENDING, 1, leggings);
+
+        super.enchantItem(Enchantment.FEATHER_FALLING, 8, boots);
+        super.enchantItem(Enchantment.UNBREAKING, 255, boots);
+        super.enchantItem(Enchantment.MENDING, 1, boots);
+        
 
         giveBaseAxe();
         giveBasePickaxe();
@@ -109,5 +121,18 @@ public class RogueRole extends GenericRole {
     @Override
     public Material favoriteFood() {
         return Material.SUGAR;
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player) {
+            Player player = (Player) event.getDamager();
+
+            // Check if the player has the "rogue" role
+            Role playerRole = gameManager.getRole(player);
+            if (playerRole != null && playerRole instanceof RogueRole) {
+                event.setDamage(event.getDamage() * gameManager.mobMultiplier);
+            }
+        }
     }
 }

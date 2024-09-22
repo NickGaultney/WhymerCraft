@@ -4,28 +4,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
+import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Cow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.joml.Random;
 
 import com.whymertech.worldresetondeath.GameManager;
 import com.whymertech.worldresetondeath.Plugin;
@@ -34,24 +30,29 @@ import com.whymertech.worldresetondeath.roles.Role;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-//import java.util.Set;
 import java.util.UUID;
 
 public class DeathListener implements Listener {
 
     private final Plugin plugin;
     private GameManager gameManager;
-    private HashSet<UUID> deadPlayers = new HashSet<>();
+    private final HashSet<UUID> deadPlayers;
 
     public DeathListener(Plugin plugin, GameManager gameManager) {
         this.plugin = plugin;
         this.gameManager = gameManager;
+        deadPlayers = gameManager.getDeadPlayers();
     }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         World world = Bukkit.getWorld(GameManager.WORLD_NAME);
+        
+        World lobbyWorld = Bukkit.getWorld(GameManager.LOBBY_WORLD_NAME);
+        World playerWorld = player.getWorld();
+
+        if (playerWorld == lobbyWorld) return;  
 
         if (!deadPlayers.isEmpty()) {
             event.setDeathMessage(player.getName() + " you're dead...and so is everyone else.");
@@ -63,7 +64,7 @@ public class DeathListener implements Listener {
         deadPlayers.add(player.getUniqueId());
 
         // Prevent the normal death process
-        event.setDeathMessage(player.getName() + " has fallen, but their spirit lingers...");
+        //event.setDeathMessage(player.getName() + " has fallen, but their spirit lingers...");
 
         // Set player to spectator mode
         player.setGameMode(GameMode.SPECTATOR);
@@ -75,6 +76,13 @@ public class DeathListener implements Listener {
         // Spawn a zombie at world spawn with player's name
         Location spawnLocation = world.getSpawnLocation();
         Chunk chunk = spawnLocation.getChunk();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                player.teleport(spawnLocation);
+            }
+        }.runTaskLater(plugin, 10L); // Delay to give time for death event to be fully processed
 
         // Load the chunk and keep it loaded
         chunk.load(true);
@@ -139,6 +147,13 @@ public class DeathListener implements Listener {
                     }
                 }
             }
+        } else if (event.getEntity() instanceof Animals) {
+            Random random = new Random();
+            int chance = random.nextInt(10);
+
+            if (chance <= 2) {
+                event.getDrops().add(new ItemStack(Material.BONE, (chance+1)));
+            }
         }
     }
 
@@ -154,45 +169,8 @@ public class DeathListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (gameManager.mobMultiplier == 1.0) return;
-
-        // Check if the entity is a hostile mob
-        if (event.getEntity() instanceof Monster) {
-            LivingEntity mob = event.getEntity();
-
-            if (mob instanceof Creeper) {
-                Creeper creeper = (Creeper) event.getEntity();
-                creeper.setExplosionRadius((int) (creeper.getExplosionRadius() * gameManager.mobMultiplier));
-                return;
-            }
-
-            // Increase health by the multiplier
-            AttributeInstance healthAttribute = mob.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-            if (healthAttribute != null) {
-                healthAttribute.setBaseValue(healthAttribute.getBaseValue() * gameManager.mobMultiplier);
-                mob.setHealth(healthAttribute.getBaseValue()); // Set current health to new max health
-            }
-
-            // Increase damage by the multiplier
-            AttributeInstance damageAttribute = mob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
-            if (damageAttribute != null) {
-                NamespacedKey key = new NamespacedKey("worldresetondeath", "custom_attack_damage");
-                // Add a modifier with a unique UUID to avoid stacking
-                AttributeModifier damageModifier = new AttributeModifier(
-                        key,
-                        damageAttribute.getBaseValue() * (gameManager.mobMultiplier - 1), // Increase by the current multiplier minus 1
-                        AttributeModifier.Operation.ADD_NUMBER,
-                        EquipmentSlotGroup.ANY
-                );
-                damageAttribute.addModifier(damageModifier);
-            }
-        }
-    }
-
     private void gameOver(Player player) {
-        deadPlayers = new HashSet<>();
+        deadPlayers.clear();
         gameManager.resetPlayer(player);
         String playerName = player.getName();
         String playerUUID = player.getUniqueId().toString();

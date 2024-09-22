@@ -8,6 +8,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -112,9 +113,6 @@ public class GenericRole implements Role {
     }
 
     public void addSpeedEffect(int speedModifier) {
-        // Duration is in ticks (20 ticks = 1 second), so this is 1 hour
-        int duration = Integer.MAX_VALUE; // Practically infinite duration
-
         // Apply Speed I effect
         PotionEffect speedEffect = new PotionEffect(PotionEffectType.SPEED, PotionEffect.INFINITE_DURATION, speedModifier, false, false);
         player.addPotionEffect(speedEffect);
@@ -154,6 +152,22 @@ public class GenericRole implements Role {
         }
 
         item.setItemMeta(itemMeta);
+    }
+
+    public ItemStack enchantBook(Enchantment enchantment, int level, ItemStack books) {
+        // Create an ItemStack of type ENCHANTED_BOOK
+        ItemStack enchantedBook = books;
+
+        // Get the meta of the enchanted book
+        EnchantmentStorageMeta bookMeta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
+        
+        // Add the enchantment to the book
+        if (bookMeta != null) {
+            bookMeta.addStoredEnchant(enchantment, level, true);
+            enchantedBook.setItemMeta(bookMeta);
+        }
+        
+        return enchantedBook;
     }
 
     public void addEffects() {

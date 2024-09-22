@@ -1,21 +1,14 @@
 package com.whymertech.worldresetondeath;
 
 import org.apache.commons.io.FileUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.GameMode;
-import org.bukkit.GameRule;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Statistic;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
@@ -36,6 +29,7 @@ import com.whymertech.worldresetondeath.roles.Role;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 public class GameManager {
 
@@ -44,6 +38,7 @@ public class GameManager {
     public static final long RECREATE_DELAY = 100L; // 5 second delay
     //public static final long SEED = -950547527103331411L;
     public static final long SEED = -123456789;
+    private WorldType seedWorldType = WorldType.NORMAL;
     private long seed = SEED;
 
     private File gameLogFile;
@@ -51,6 +46,7 @@ public class GameManager {
     private SeedManager seedManager;
     private ObjectiveManager objectiveManager;
     public double mobMultiplier = 1.0;
+    private HashSet<UUID> deadPlayers = new HashSet<>();
     public Material objectiveMaterial;
 
     private Plugin plugin;
@@ -133,6 +129,9 @@ public class GameManager {
         } else {
             player.teleport(Bukkit.getWorld(WORLD_NAME).getSpawnLocation());
         }
+
+        //FIXME: This doesn't work
+        player.setRespawnLocation(Bukkit.getWorld(WORLD_NAME).getSpawnLocation());
     }
 
     public void resetPlayer(Player player) {
@@ -320,6 +319,7 @@ public class GameManager {
 
     private void recreateWorlds() {
         seed = seedManager.getRandomSeedFromList();
+        seedWorldType = seedManager.getSeedWorldType();
         Bukkit.broadcastMessage("Creating the overworld...");
         recreateWorld();
         Bukkit.broadcastMessage("Creating the nether...");
@@ -339,6 +339,7 @@ public class GameManager {
         //plugin.getLogger().info("Creating new world with seed: " + GameManager.SEED);
         WorldCreator creator = new WorldCreator(GameManager.WORLD_NAME);
         creator.seed(seed);
+        creator.type(seedWorldType);
         World newWorld = Bukkit.createWorld(creator);
         newWorld.setDifficulty(Difficulty.HARD);
         newWorld.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
@@ -356,6 +357,7 @@ public class GameManager {
         WorldCreator loadWorldNether = new WorldCreator(GameManager.WORLD_NAME + "_nether");
         loadWorldNether.environment(World.Environment.NETHER);
         loadWorldNether.seed(seed);
+        loadWorldNether.type(seedWorldType);
         World newWorld = Bukkit.createWorld(loadWorldNether);
         newWorld.setDifficulty(Difficulty.HARD);
         newWorld.setPVP(true);
@@ -371,6 +373,7 @@ public class GameManager {
         WorldCreator loadWorldEnd = new WorldCreator(GameManager.WORLD_NAME + "_the_end");
         loadWorldEnd.environment(World.Environment.THE_END);
         loadWorldEnd.seed(seed);
+        loadWorldEnd.type(seedWorldType);
         World newWorld = Bukkit.createWorld(loadWorldEnd);
         newWorld.setDifficulty(Difficulty.HARD);
         newWorld.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
@@ -520,5 +523,13 @@ public class GameManager {
 
     private void loadObjective() {
         objectiveManager.giveObjectiveBook();
+    }
+
+    public int getGameNumber() { return gameNumber; }
+
+    public HashSet<UUID> getDeadPlayers() { return deadPlayers; }
+
+    public boolean zombieExists() {
+        return !deadPlayers.isEmpty();
     }
 }

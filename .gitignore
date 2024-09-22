@@ -11,4 +11,4 @@ src/**
 # Ignore other directories at the root
 !/src/**
 target/classes/com/whymertech/worldresetondeath/Plugin.class
-target/classes/com/whymertech/worldresetondeath/Plugin.class
+/target/
