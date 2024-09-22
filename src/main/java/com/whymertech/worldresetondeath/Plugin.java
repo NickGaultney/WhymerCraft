@@ -18,8 +18,7 @@ import com.whymertech.worldresetondeath.tabCompleters.RoleTabCompleter;
 import org.bukkit.event.Listener;
 
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -83,6 +82,7 @@ public class Plugin extends JavaPlugin implements Listener
         getCommand("resetplayer").setTabCompleter(new ResetPlayerTabCompleter());
 
         new BlackSmithRecipes(this);
+        initSkyblock();
 
         getLogger().info("WorldResetOnDeath plugin has been enabled!");
     }
@@ -109,5 +109,22 @@ public class Plugin extends JavaPlugin implements Listener
                 getLogger().severe("Failed to create death log file: " + e.getMessage());
             }
         }
+    }
+
+    private void initSkyblock() {
+        File dataFolder = getDataFolder();
+        InputStream skyblock = getResource("skyblock.nbt");
+        File skyblockFile = new File(dataFolder, "skyblock.nbt");
+        try {
+            OutputStream skyblockWriter = new FileOutputStream(skyblockFile);
+            skyblock.transferTo(skyblockWriter);
+        } catch (FileNotFoundException e) {
+            getLogger().info("Something went wrong retrieving data folder");
+            getLogger().info(e.getMessage());
+        } catch (IOException e) {
+            getLogger().info("An error occurred copying the skyblock file to the data folder");
+            getLogger().info(e.getMessage());
+        }
+
     }
 }

@@ -400,6 +400,9 @@ public class GameManager {
 
                 gameLog.set("current_game.number", gameNumber);
                 gameLog.save(gameLogFile);
+
+                objectiveMaterial = objectiveManager.selectRandomObjective();
+                gameLog.set("current_game.objective", objectiveMaterial.getKey().toString());
             } catch (IOException e) {
                 plugin.getLogger().severe("Failed to create death log file: " + e.getMessage());
             }
