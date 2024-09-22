@@ -127,11 +127,6 @@ public class TheHatRole extends GenericRole implements Listener {
     }
 
     @EventHandler
-    public void onPlayerConsume(PlayerItemConsumeEvent event) {
-        plugin.getLogger().info("Consumed: " + event.getItem().getType().name());
-    }
-
-    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Role playerRole = gameManager.getRole(player);
@@ -141,11 +136,12 @@ public class TheHatRole extends GenericRole implements Listener {
                 if (playerRole instanceof TheHatRole) {
                     item.setAmount(32);
                 }
+                else {
+                    //Don't let non-Hats use Infinite Fireworks
+                    event.setCancelled(true);
+                }
             }
 
-        }
-        else {
-            player.setFlySpeed(1);
         }
     }
 
