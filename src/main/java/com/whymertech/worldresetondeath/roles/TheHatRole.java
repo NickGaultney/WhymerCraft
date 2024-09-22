@@ -6,6 +6,10 @@ import org.bukkit.block.structure.Mirror;
 import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.whymertech.worldresetondeath.GameManager;
@@ -13,6 +17,7 @@ import com.whymertech.worldresetondeath.Plugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.structure.Structure;
 
 import java.io.File;
@@ -22,7 +27,7 @@ import java.util.Random;
 import static com.whymertech.worldresetondeath.Utils.plugin;
 import static com.whymertech.worldresetondeath.Utils.randInt;
 
-public class TheHatRole extends GenericRole {
+public class TheHatRole extends GenericRole implements Listener {
 
     public double health = 20.0;
     public Location spawn;
@@ -30,6 +35,9 @@ public class TheHatRole extends GenericRole {
     private static final double yOffset = 4;
     private static final double zOffset = 3.5;
 
+    private static final String ROCKET_NAME = "Infinite Rockets";
+
+    public TheHatRole(GameManager gameManager) { super(gameManager); }
     public TheHatRole(Player player) {
         super(player);
     }
@@ -103,6 +111,9 @@ public class TheHatRole extends GenericRole {
         
         ItemStack elytra = new ItemStack(Material.ELYTRA);
         ItemStack rockets = new ItemStack(Material.FIREWORK_ROCKET, 64);
+        ItemMeta rocketMeta = rockets.getItemMeta();
+        rocketMeta.setItemName(ROCKET_NAME);
+        rockets.setItemMeta(rocketMeta);
 
         super.enchantItem(Enchantment.MENDING, 1, elytra);
         super.enchantItem(Enchantment.UNBREAKING, 255, elytra);
@@ -114,4 +125,24 @@ public class TheHatRole extends GenericRole {
     public Material favoriteFood() {
         return Material.CHORUS_FRUIT;
     }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        Role playerRole = gameManager.getRole(player);
+        if (event.hasItem()) {
+            ItemStack item = event.getItem();
+            if (item.getType() == Material.FIREWORK_ROCKET && item.getItemMeta().getItemName().equals(ROCKET_NAME)){
+                if (playerRole instanceof TheHatRole) {
+                    item.setAmount(32);
+                }
+                else {
+                    //Don't let non-Hats use Infinite Fireworks
+                    event.setCancelled(true);
+                }
+            }
+
+        }
+    }
+
 }

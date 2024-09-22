@@ -69,6 +69,7 @@ public class Plugin extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(new BlackSmithRole(gameManager), this);
         getServer().getPluginManager().registerEvents(new ArcherRole(gameManager), this);
         getServer().getPluginManager().registerEvents(new RogueRole(gameManager), this);
+        getServer().getPluginManager().registerEvents(new TheHatRole(gameManager), this);
 
         getCommand("kys").setExecutor(new KysCommand(this, gameManager)); // Registering the kys command
         getCommand("join").setExecutor(new JoinCommand(this, gameManager)); // Registering the join command
